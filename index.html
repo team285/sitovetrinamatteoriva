@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Avatar AI & Automation — Matt | AI Automation Consultant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050510;
+    --bg-1: #0A0A1A;
+    --bg-2: #10102A;
+    --bg-3: #15153A;
+    --bg-card: #15171C;
+    --text: #FFFFFF;
+    --text-muted: rgba(255, 255, 255, 0.65);
+    --text-dim: rgba(255, 255, 255, 0.42);
+    --blue: #3B82F6;
+    --blue-deep: #1E40AF;
+    --orange: #FF7A1A;
+    --orange-deep: #C2410C;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --gradient: linear-gradient(135deg, #3B82F6 0%, #FF7A1A 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(255, 122, 26, 0.14) 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg-0);
+    color: var(--text);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 100vh;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 0%, rgba(59, 130, 246, 0.12), transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 25%, rgba(255, 122, 26, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  main, nav { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px);
+    background: rgba(5, 5, 16, 0.82);
+    border-bottom: 1px solid var(--border);
+  }
+  .scroll-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--gradient);
+    transition: width 0.15s ease;
+  }
+  .nav-inner {
+    max-width: 1360px; margin: 0 auto;
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .brand { font-weight: 900; font-size: 14px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .brand span { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 22px; font-size: 12px; flex-wrap: wrap; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; transition: color .2s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 14px; background: var(--gradient); border-radius: 100px; color: #fff; text-decoration: none; font-weight: 700; }
+
+  .menu-toggle { display: none; background: transparent; border: 1px solid var(--border-strong); border-radius: 8px; width: 38px; height: 38px; cursor: pointer; padding: 0; position: relative; flex-shrink: 0; }
+  .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after {
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 2px; background: var(--text); transition: all .25s;
+  }
+  .menu-toggle span { top: 50%; transform: translate(-50%, -50%); }
+  .menu-toggle span::before { top: -6px; }
+  .menu-toggle span::after { top: 6px; }
+  .menu-toggle.open span { background: transparent; }
+  .menu-toggle.open span::before { top: 0; transform: translateX(-50%) rotate(45deg); background: var(--orange); }
+  .menu-toggle.open span::after { top: 0; transform: translateX(-50%) rotate(-45deg); background: var(--orange); }
+
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-cta { display: none; }
+    .menu-toggle { display: block; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(5, 5, 16, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px 20px;
+      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      transition: all .25s ease;
+    }
+    .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .nav-links a { font-size: 15px; padding: 14px 0; border-top: 1px solid var(--border); }
+    .nav-links a:first-child { border-top: none; }
+  }
+
+  .fab-top {
+    position: fixed; bottom: 32px; right: 32px;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--gradient); color: #fff;
+    border: none; cursor: pointer; font-size: 20px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.3s ease; z-index: 99; font-family: inherit;
+  }
+  .fab-top.visible { opacity: 1; transform: translateY(0); }
+  .fab-top:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4); }
+  @media (max-width: 700px) { .fab-top { bottom: 20px; right: 20px; width: 46px; height: 46px; font-size: 18px; } }
+
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .container { max-width: 1360px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 700px) { .container { padding: 0 20px; } }
+
+  /* HERO */
+  .hero { padding: 104px 0 64px; }
+  @media (max-width: 700px) { .hero { padding: 56px 0 40px; } }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border: 1px solid var(--border-strong); border-radius: 100px;
+    margin-bottom: 32px;
+  }
+  .eyebrow .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-right: 10px; box-shadow: 0 0 8px var(--orange); vertical-align: middle; }
+  h1 { font-size: clamp(36px, 5.6vw, 76px); font-weight: 900; line-height: 1.04; letter-spacing: -0.03em; max-width: 1100px; margin-bottom: 24px; }
+  h1 .grad, h2 .grad, .grad-text { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-size: clamp(16px, 1.6vw, 20px); color: var(--text-muted); max-width: 760px; margin-bottom: 36px; }
+  .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+  .btn-primary { padding: 16px 28px; background: var(--gradient); color: #fff; border-radius: 100px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform .25s, box-shadow .25s; font-size: 15px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(59, 130, 246, 0.35); }
+  .btn-secondary { padding: 16px 28px; background: transparent; color: var(--text); border: 1px solid var(--border-strong); border-radius: 100px; font-weight: 700; text-decoration: none; transition: all .25s; font-size: 15px; }
+  .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+  .hero-meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+  .hero-meta strong { color: var(--text); font-weight: 600; }
+
+  /* SECTION */
+  section { padding: 80px 0; position: relative; }
+  @media (max-width: 700px) { section { padding: 56px 0; } }
+  .section-header { max-width: 880px; margin-bottom: 48px; }
+  @media (max-width: 700px) { .section-header { margin-bottom: 32px; } }
+  .section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 16px; }
+  h2 { font-size: clamp(28px, 3.6vw, 44px); font-weight: 800; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 18px; }
+  h3 { font-weight: 700; letter-spacing: -0.015em; }
+  .section-lead { color: var(--text-muted); font-size: 17px; max-width: 760px; }
+
+  /* SITUAZIONE */
+  .situation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .situation-grid { grid-template-columns: 1fr; } }
+  .sit-card { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; }
+  @media (max-width: 700px) { .sit-card { padding: 28px 22px; } }
+  .sit-card.problem { border-color: rgba(255, 122, 26, 0.2); }
+  .sit-card.opportunity { border-color: rgba(59, 130, 246, 0.2); }
+  .sit-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+  .sit-card.problem::before { background: linear-gradient(90deg, var(--orange-deep), var(--orange)); }
+  .sit-card.opportunity::before { background: linear-gradient(90deg, var(--blue-deep), var(--blue)); }
+  .sit-tag { display: inline-block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 6px 12px; border-radius: 100px; margin-bottom: 20px; }
+  .sit-card.problem .sit-tag { background: rgba(255, 122, 26, 0.14); color: #FFB780; }
+  .sit-card.opportunity .sit-tag { background: rgba(59, 130, 246, 0.14); color: #93C5FD; }
+  .sit-card h3 { font-size: 24px; margin-bottom: 16px; letter-spacing: -0.02em; }
+  .sit-card p { color: var(--text-muted); font-size: 15px; line-height: 1.65; margin-bottom: 20px; }
+  .sit-card ul { list-style: none; padding: 0; }
+  .sit-card li { padding: 10px 0; padding-left: 26px; font-size: 14px; color: var(--text-muted); position: relative; border-top: 1px solid var(--border); }
+  .sit-card li:first-child { border-top: none; }
+  .sit-card.problem li::before { content: '✕'; position: absolute; left: 6px; top: 8px; color: #FFB780; font-weight: 800; font-size: 16px; }
+  .sit-card.opportunity li::before { content: '✓'; position: absolute; left: 6px; top: 10px; color: #93C5FD; font-weight: 800; font-size: 14px; }
+
+  /* SERVIZI — BIG CARDS */
+  .audience-header { margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .audience-header .lbl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); font-weight: 700; padding: 6px 14px; border: 1px solid rgba(255, 122, 26, 0.4); border-radius: 100px; background: rgba(255, 122, 26, 0.08); }
+  .audience-header .audience-title { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; letter-spacing: -0.02em; }
+  .audience-header .audience-title span { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .audience-header .audience-tag { color: var(--text-muted); font-size: 14px; flex-basis: 100%; line-height: 1.5; margin-top: 4px; }
+  .audience-block { margin-bottom: 56px; }
+  .audience-block:last-child { margin-bottom: 0; }
+  .paths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .paths-grid { grid-template-columns: 1fr; } }
+  .path-card { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border-strong); border-radius: 24px; padding: 40px; position: relative; overflow: hidden; }
+  @media (max-width: 700px) { .path-card { padding: 28px 22px; border-radius: 20px; } }
+  .path-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); }
+  .path-card.featured { border-color: var(--orange); }
+  .path-card.featured::before { background: var(--orange); height: 5px; }
+  .path-tag { display: inline-block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 6px 12px; border-radius: 100px; background: rgba(59, 130, 246, 0.14); color: #93C5FD; margin-bottom: 16px; }
+  .path-card.featured .path-tag { background: rgba(255, 122, 26, 0.14); color: #FFB780; }
+  .path-card h3 { font-size: 28px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .path-duration { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+  .path-desc { color: var(--text-muted); font-size: 14px; line-height: 1.65; margin-bottom: 22px; }
+  .path-list { list-style: none; padding: 0; margin-bottom: 22px; }
+  .path-list li { padding: 11px 0; padding-left: 28px; font-size: 14px; color: var(--text); position: relative; border-top: 1px solid var(--border); line-height: 1.55; }
+  .path-list li:first-child { border-top: none; padding-top: 4px; }
+  .path-list li::before { content: '→'; position: absolute; left: 0; top: 10px; color: var(--orange); font-weight: 800; }
+  .path-list li:first-child::before { top: 3px; }
+  .path-cta { display: block; text-align: center; padding: 14px 24px; background: var(--gradient); color: #fff; border-radius: 100px; font-weight: 700; text-decoration: none; transition: all .25s; font-size: 14px; }
+  .path-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35); }
+  .path-card.featured .path-cta { background: var(--orange); }
+
+  /* PILASTRI */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border); border-radius: 20px; padding: 32px; position: relative; overflow: hidden; transition: all .25s; }
+  .pillar:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+  .pillar-num { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 14px; }
+  .pillar-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--gradient-soft); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; margin-bottom: 20px; color: var(--orange); }
+  .pillar h3 { font-size: 22px; margin-bottom: 12px; letter-spacing: -0.015em; }
+  .pillar p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+
+  /* AI STACK */
+  .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 800px) { .stack-grid { grid-template-columns: 1fr; } }
+  .stack-card { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; }
+  @media (max-width: 700px) { .stack-card { padding: 28px 22px; } }
+  .stack-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background: var(--gradient); }
+  .stack-fase { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 14px; }
+  .stack-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .stack-role { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; font-weight: 500; }
+  .stack-how { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.65; }
+  .stack-how em { color: var(--text); font-style: normal; font-weight: 600; }
+  .stack-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .stack-feat { font-size: 11px; padding: 5px 11px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 100px; color: var(--text-muted); }
+  .stack-impact { padding: 14px 16px; background: rgba(255, 122, 26, 0.06); border: 1px solid rgba(255, 122, 26, 0.15); border-radius: 10px; font-size: 13px; color: var(--text); line-height: 1.55; }
+  .stack-impact strong { color: var(--orange); }
+
+  /* TIMELINE */
+  .timeline { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+  @media (max-width: 1100px) { .timeline { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 600px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+  .tl-month { background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 14px; text-align: center; transition: all .25s; }
+  .tl-month:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .tl-month-num { display: inline-block; width: 32px; height: 32px; border-radius: 50%; background: var(--gradient); color: #fff; font-weight: 800; font-size: 14px; line-height: 32px; margin-bottom: 12px; }
+  .tl-month-lbl { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .tl-month-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+  /* OUTCOMES */
+  .outcomes { background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(255, 122, 26, 0.10) 100%); border: 1px solid var(--border-strong); border-radius: 32px; padding: 56px 48px; }
+  @media (max-width: 700px) { .outcomes { padding: 36px 22px; border-radius: 24px; } }
+  .outcomes h3 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; text-align: center; }
+  .outcomes > p { text-align: center; color: var(--text-muted); margin-bottom: 40px; font-size: 16px; }
+  .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .outcome-grid { grid-template-columns: 1fr; } }
+  .out-item { background: rgba(5, 5, 16, 0.5); border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; backdrop-filter: blur(8px); }
+  .out-item .out-num { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 12px; }
+  .out-item h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .out-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* WHY US */
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 1000px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-card { background: var(--bg-1); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; transition: all .25s; }
+  .why-card:hover { border-color: var(--border-strong); }
+  .why-val { font-size: 42px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+  .why-val .small { font-size: 22px; }
+  .why-lbl { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 4px; }
+  .why-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* CASI STUDIO */
+  .cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 800px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px) { .cases-grid { grid-template-columns: 1fr; } }
+  .case { background: var(--bg-1); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all .25s; }
+  .case:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+  .case-niche { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 10px; }
+  .case h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.015em; }
+  .case-handle { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+  .case-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .faq details { background: var(--bg-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; transition: all .2s; }
+  .faq details[open] { border-color: var(--border-strong); background: var(--bg-2); }
+  .faq summary { cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--orange); font-size: 24px; font-weight: 300; transition: transform .2s; flex-shrink: 0; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+
+  /* CTA FINALE */
+  .cta { background: var(--bg-1); border: 1px solid var(--border-strong); border-radius: 32px; padding: 64px 48px; text-align: center; position: relative; overflow: hidden; }
+  @media (max-width: 700px) { .cta { padding: 48px 24px; border-radius: 24px; } }
+  .cta::before { content: ''; position: absolute; top: -50%; left: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(59, 130, 246, 0.10), transparent 60%); pointer-events: none; }
+  .cta::after { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(255, 122, 26, 0.10), transparent 60%); pointer-events: none; }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta h2 { font-size: clamp(32px, 4.5vw, 56px); margin-bottom: 20px; }
+  .cta p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 0 auto 36px; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 540px) {
+    .cta-btns { flex-direction: column; }
+    .cta-btns a { width: 100%; justify-content: center; }
+  }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 40px; text-align: center; color: var(--text-dim); font-size: 12px; }
+  footer span { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">MATT <span>| AI AUTOMATION</span></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#situazione">Il problema</a>
+      <a href="#servizi">Servizi</a>
+      <a href="#cosa-include">Cosa include</a>
+      <a href="#stack">AI stack</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#risultati">Risultati</a>
+      <a href="#casi">I numeri</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#cta" class="nav-cta">Prenota call</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Apri menu" aria-expanded="false"><span></span></button>
+  </div>
+  <div class="scroll-progress" id="progress"></div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow reveal"><span class="dot"></span>Avatar AI · Automation · AI Agent</div>
+      <h1 class="reveal">Apri il laptop alle 9. <span class="grad">È già tutto fatto.</span></h1>
+      <p class="hero-sub reveal">Lead qualificati nella pipeline. Email del giorno scritte. Contenuti pubblicati. Report aggiornati. Mentre tu eri ancora a letto. <strong style="color:#fff;">Non è magia, è AI fatta come si deve</strong> — agent intelligenti che lavorano per te e un avatar digitale che mette la tua presenza online in autopilot. Senza assumere nessuno. Senza imparare a programmare. Senza esporti.</p>
+      <div class="hero-cta-row reveal">
+        <a href="#cta" class="btn-primary">Prenota call gratuita di 30 min →</a>
+        <a href="#servizi" class="btn-secondary">Scopri i servizi</a>
+      </div>
+      <div class="hero-meta reveal">
+        <div><strong>Per chi</strong> · Imprenditori, PMI, liberi professionisti</div>
+        <div><strong>Cosa facciamo</strong> · Avatar AI + AI Agent + Automation</div>
+        <div><strong>Come</strong> · Team senior + tool proprietari + 1:1</div>
+        <div><strong>Track record</strong> · 4 brand attivi · 200+ implementazioni</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITUAZIONE -->
+  <section id="situazione">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">PUNTO DI PARTENZA</div>
+        <h2>L'AI è qui. <span class="grad">Tu sei pronto a usarla davvero?</span></h2>
+        <p class="section-lead">Tutti parlano di AI. Pochi la mettono in produzione. Ancora meno costruiscono asset duraturi attorno a essa. Ecco da dove partiamo.</p>
+      </div>
+
+      <div class="situation-grid">
+        <div class="sit-card problem reveal">
+          <span class="sit-tag">Oggi</span>
+          <h3>Dove sei bloccato</h3>
+          <p>Hai capito che l'AI cambia tutto. Ma quando provi ad applicarla, ti perdi: troppi tool, troppi guru, troppe promesse. E i competitor si stanno muovendo veloci.</p>
+          <ul>
+            <li>Tu o il tuo team passate 15-20h/settimana in lavoro ripetitivo che potrebbe fare un AI agent</li>
+            <li>Vorresti più contenuti online ma non hai tempo di girare reel ogni giorno</li>
+            <li>Usi ChatGPT al 10% del suo potenziale, senza workflow strutturati</li>
+            <li>Hai provato corsi e formazione, ma niente è mai stato applicato sul TUO business</li>
+            <li>Vedi avatar AI di altri brand che funzionano e ti chiedi come fanno</li>
+            <li>Sai che serve agire ora, ma non hai tempo (né voglia) di studiare da zero</li>
+          </ul>
+        </div>
+
+        <div class="sit-card opportunity reveal">
+          <span class="sit-tag">Quando lavori con noi</span>
+          <h3>Dove arrivi</h3>
+          <p>L'AI smette di essere un buzzword e diventa il tuo nuovo collaboratore. Lavora la notte. Gestisce processi. Pubblica contenuti. Qualifica lead. Tu fai il lavoro che conta davvero.</p>
+          <ul>
+            <li>Agent AI che gestiscono customer service, lead qualification, reportistica al posto tuo</li>
+            <li>Workflow di automation che recuperano 15-20h/settimana al team (misurate)</li>
+            <li>Un avatar AI completo (volto + voce + contenuti + funnel) che genera lead 24/7</li>
+            <li>Tool proprietari calibrati sul tuo business, non abbonamenti random</li>
+            <li>Sistema di vendita testato per convertire attenzione in clienti paganti</li>
+            <li>Vantaggio competitivo di 18-24 mesi sul tuo mercato</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIZI — 2 MACRO CATEGORIE -->
+  <section id="servizi">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">COSA FACCIAMO</div>
+        <h2>Due leve, <span class="grad">un solo risultato</span>: il tuo tempo torna tuo.</h2>
+        <p class="section-lead">L'<strong style="color:#fff;">avatar AI</strong> si occupa della tua presenza online — contenuti, lead, brand. Gli <strong style="color:#fff;">AI agent e le automazioni</strong> si occupano del lavoro operativo — email, processi, reportistica, customer service. Insieme, sono il tuo team digitale: lavora 24/7, non ha ferie, non fa errori, costa una frazione.</p>
+      </div>
+
+      <!-- BLOCCO 1: AGENT & AUTOMATION -->
+      <div class="audience-block reveal">
+        <div class="audience-header">
+          <span class="lbl">AI Agent & Automation</span>
+          <div class="audience-title">Il tuo <span>team digitale</span> che lavora mentre tu dormi</div>
+          <p class="audience-tag">Per imprenditori, PMI e liberi professionisti che stanno annegando nel lavoro ripetitivo. Costruiamo agenti AI e workflow su misura del tuo business — non template generici. Risultato medio: 15-20h/settimana recuperate per ogni persona del team.</p>
+        </div>
+
+        <div class="paths-grid">
+
+          <div class="path-card">
+            <span class="path-tag">AI Agent Custom</span>
+            <h3>Agenti AI specializzati</h3>
+            <div class="path-duration">Il tuo collaboratore digitale che non dorme mai</div>
+            <p class="path-desc">Sviluppiamo agent AI proprietari per task specifici. Customer service che gestisce il 70-80% delle richieste. Lead qualification automatica. Reporting che si scrive da solo. Knowledge base interrogabile dal team in linguaggio naturale.</p>
+            <ul class="path-list">
+              <li><strong>Audit del processo</strong> — mappiamo le attività ripetitive con ROI calcolato</li>
+              <li><strong>AI Agent dedicato</strong> — Claude API + n8n + i tool che già usi</li>
+              <li><strong>Training sulla tua knowledge</strong> — risponde come il tuo collaboratore senior</li>
+              <li><strong>Dashboard di controllo</strong> — vedi cosa fa, quando, con che risultato</li>
+              <li><strong>Calibrazione continua</strong> — iteriamo sul feedback reale</li>
+              <li><strong>Documentazione + training</strong> — il tuo team lo gestisce in autonomia</li>
+              <li><strong>SLA opzionale</strong> — manutenzione, evolutive, supporto continuo</li>
+            </ul>
+            <a href="#cta" class="path-cta">Parliamone in call →</a>
+          </div>
+
+          <div class="path-card">
+            <span class="path-tag">Workflow Automation</span>
+            <h3>Automazione end-to-end</h3>
+            <div class="path-duration">15-20 ore a settimana liberate. Garantite.</div>
+            <p class="path-desc">Mappiamo i task più ripetitivi del tuo business e li trasformiamo in workflow che girano da soli. Email, fatturazione, lead routing, reportistica, sincronizzazioni tra tool. Tu (o il tuo team) torni a fare il lavoro che conta.</p>
+            <ul class="path-list">
+              <li><strong>Time Audit</strong> — 2 settimane di mappatura tempi reali del team</li>
+              <li><strong>Prioritization map</strong> — quali processi automatizzare prima (per impatto economico)</li>
+              <li><strong>Sviluppo workflow</strong> — n8n + Claude API, visuali, no vendor lock-in</li>
+              <li><strong>Integrazione tool esistenti</strong> — HubSpot, Slack, Google Workspace, gestionali</li>
+              <li><strong>Test + rollout graduale</strong> — un workflow alla volta, misurato</li>
+              <li><strong>ROI report mensile</strong> — ore risparmiate, errori ridotti, costi abbattuti</li>
+              <li><strong>Training del team</strong> — chi nel team mantiene i workflow in autonomia</li>
+            </ul>
+            <a href="#cta" class="path-cta">Parliamone in call →</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCCO 2: AVATAR AI -->
+      <div class="audience-block reveal">
+        <div class="audience-header">
+          <span class="lbl">Avatar AI</span>
+          <div class="audience-title">Il tuo <span>brand digitale</span> che pubblica al posto tuo</div>
+          <p class="audience-tag">Per imprenditori e liberi professionisti che vogliono presenza social, contenuti regolari e lead in arrivo — senza girare reel ogni giorno, senza esporre la propria faccia, senza diventare creator a tempo pieno. L'avatar AI è il tuo "tu digitale" che lavora mentre tu fai il tuo lavoro.</p>
+        </div>
+
+        <div class="paths-grid">
+
+          <div class="path-card">
+            <span class="path-tag">Avatar Chiavi in Mano</span>
+            <h3>Costruiamo noi, tu pubblichi</h3>
+            <div class="path-duration">Tu ti rilassi. Noi facciamo tutto.</div>
+            <p class="path-desc">Tu fornisci brand, posizionamento e obiettivi. Noi consegniamo un avatar AI completo pronto a generare lead e contenuti. Zero tempo di apprendimento richiesto. Quando finiamo, sai esattamente cosa pubblicare ogni giorno per i prossimi 12 mesi.</p>
+            <ul class="path-list">
+              <li><strong>Avatar AI completo</strong> — volto fotorealistico, voce naturale, identità LOCKED</li>
+              <li><strong>Bio + setup IG/FB</strong> — pagine ottimizzate per conversione, compliance EU AI Act</li>
+              <li><strong>Libreria contenuti pronta</strong> — video lunghi, brevi, infografiche, stories, caption DR</li>
+              <li><strong>AI Stack proprietario</strong> — i nostri tool calibrati sul tuo brand</li>
+              <li><strong>Funnel + sales script</strong> — DM automation, lead magnet, call booking</li>
+              <li><strong>Telegram broadcast</strong> setup + sequenze nurture</li>
+              <li><strong>Handoff completo</strong> — tutto documentato, processi replicabili</li>
+            </ul>
+            <a href="#cta" class="path-cta">Parliamone in call →</a>
+          </div>
+
+          <div class="path-card featured">
+            <span class="path-tag">Percorso Agency · ⭐ Più richiesto</span>
+            <h3>Diventa tu l'agency Avatar AI</h3>
+            <div class="path-duration">Trasforma l'AI nella tua nuova fonte di reddito</div>
+            <p class="path-desc">Ti insegniamo TUTTO il nostro sistema: come trovare clienti, costruire avatar AI per loro, gestire produzione e contenuti, vendere progetti high-ticket. Esci con una vera agency e i primi clienti già firmati.</p>
+            <ul class="path-list">
+              <li><strong>Costruzione TUO avatar AI</strong> + bio + telegram + IG/FB completi</li>
+              <li><strong>Brand & Positioning Agency</strong> — come ti vendi, a chi, a che prezzo</li>
+              <li><strong>Sales funnel completo</strong> — acquisizione lead, qualifica, chiusura high-ticket</li>
+              <li><strong>Social funnel agency</strong> — contenuti che attirano clienti enterprise</li>
+              <li><strong>Formazione produzione</strong> — come crei avatar per altri brand</li>
+              <li><strong>AI Stack proprietario</strong> + licenze in comodato d'uso per tutto il percorso</li>
+              <li><strong>Setup team & operations</strong> — chi assumere, come, quanto</li>
+              <li><strong>Affiancamento 1:1</strong> — chat lun-ven + call settimanale fissa</li>
+              <li><strong>Community + master class</strong> con gli altri founder dell'agency network</li>
+            </ul>
+            <a href="#cta" class="path-cta">Parliamone in call →</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COSA INCLUDE -->
+  <section id="cosa-include">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">COSA INCLUDE IL PERCORSO</div>
+        <h2>I 3 pilastri operativi <span class="grad">in entrambi i percorsi</span>.</h2>
+        <p class="section-lead">Indipendentemente dal percorso scelto, lavoriamo su questi 3 fronti contemporaneamente. È quello che ci distingue da chi vende solo "formazione" o solo "fatto per te".</p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar reveal">
+          <div class="pillar-num">01 · AVATAR</div>
+          <div class="pillar-icon">🤖</div>
+          <h3>Costruzione avatar AI</h3>
+          <p>Volto fotorealistico, voce naturale, identità visiva e tono di voce coerenti. L'avatar che produciamo passa il "test umanità" e supera anche scettici del wellness/finance/health.</p>
+        </div>
+
+        <div class="pillar reveal">
+          <div class="pillar-num">02 · AUTOMATION</div>
+          <div class="pillar-icon">⚙️</div>
+          <h3>Workflow & AI Agent</h3>
+          <p>Setup di automation reali con n8n + Claude API + tool che già usi. Non template generici: workflow cuciti sul tuo processo, che recuperano 15-20h/settimana misurate.</p>
+        </div>
+
+        <div class="pillar reveal">
+          <div class="pillar-num">03 · FUNNEL</div>
+          <div class="pillar-icon">📈</div>
+          <h3>Social funnel & vendita</h3>
+          <p>Dal contenuto al lead, dal lead alla call, dalla call al cliente. Sistema di acquisizione completo con DM automation, lead magnet, sales script, sequenze email/Telegram.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI STACK -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">L'INFRASTRUTTURA AI</div>
+        <h2>4 tool AI proprietari <span class="grad">che lavorano per te</span>.</h2>
+        <p class="section-lead">Sviluppati internamente da noi, non integrazioni di terzi. Calibrati sul tuo brand, in comodato d'uso per la durata del percorso. Acquisto o restituzione a fine percorso.</p>
+      </div>
+
+      <div class="stack-grid">
+
+        <div class="stack-card reveal">
+          <div class="stack-fase">Tool 01 · Produzione</div>
+          <div class="stack-name">AvatarForge AI</div>
+          <div class="stack-role">Genera contenuti coerenti per il tuo avatar in batch.</div>
+          <div class="stack-how">Carichi script o brief, l'agent ti restituisce <em>frame fotorealistici, video parlati 1080p, infografiche pronte e caption DR 8-layer</em> ancorate alla tua knowledge. Output replicabile, identità sempre coerente.</div>
+          <div class="stack-features">
+            <span class="stack-feat">Video parlati 1080p</span>
+            <span class="stack-feat">Infografiche 4:5</span>
+            <span class="stack-feat">Caption DR</span>
+            <span class="stack-feat">Stories scritte</span>
+          </div>
+          <div class="stack-impact"><strong>Per te:</strong> da 1 contenuto/settimana a 5-7/settimana, con qualità professionale. Production line scalabile.</div>
+        </div>
+
+        <div class="stack-card reveal">
+          <div class="stack-fase">Tool 02 · Lead Gen</div>
+          <div class="stack-name">FunnelBot AI</div>
+          <div class="stack-role">L'agent che gestisce DM e qualifica i lead per te.</div>
+          <div class="stack-how">Risponde automaticamente a chi commenta keyword o scrive in DM, qualifica con BANT semplificato, schedula call su Calendly. <em>Tu intervieni solo a call confermata.</em></div>
+          <div class="stack-features">
+            <span class="stack-feat">DM automation</span>
+            <span class="stack-feat">Qualifica BANT</span>
+            <span class="stack-feat">Calendly sync</span>
+            <span class="stack-feat">Lead scoring</span>
+          </div>
+          <div class="stack-impact"><strong>Per te:</strong> -90% del tempo speso a gestire commenti/DM. Solo lead qualificati arrivano in call.</div>
+        </div>
+
+        <div class="stack-card reveal">
+          <div class="stack-fase">Tool 03 · Sales</div>
+          <div class="stack-name">SalesCoach AI</div>
+          <div class="stack-role">L'agent che analizza le tue call di vendita.</div>
+          <div class="stack-how">Carichi una call, in 2 minuti ricevi: <em>score 0-10, errori specifici con la frase corretta, leva emotiva persa, prossima azione</em>. Personalizzato sulla tua metodologia.</div>
+          <div class="stack-features">
+            <span class="stack-feat">Score 0-10</span>
+            <span class="stack-feat">7 fasi vendita</span>
+            <span class="stack-feat">Correzioni precise</span>
+            <span class="stack-feat">Pattern recognition</span>
+          </div>
+          <div class="stack-impact"><strong>Per te:</strong> ogni call diventa una lezione. Acceleri la curva di apprendimento di mesi.</div>
+        </div>
+
+        <div class="stack-card reveal">
+          <div class="stack-fase">Tool 04 · Strategy</div>
+          <div class="stack-name">AlgoSense AI</div>
+          <div class="stack-role">L'unico sistema che legge l'algoritmo IG per la tua nicchia.</div>
+          <div class="stack-how">Scandaglia migliaia di contenuti, ti restituisce <em>solo i format che funzionano nel tuo settore</em>. Filtri per views, engagement, durata. <em>Refresh ogni 14 giorni.</em></div>
+          <div class="stack-features">
+            <span class="stack-feat">Trend anticipo</span>
+            <span class="stack-feat">Filtri avanzati</span>
+            <span class="stack-feat">Nicchia-aware</span>
+            <span class="stack-feat">Refresh 14gg</span>
+          </div>
+          <div class="stack-impact"><strong>Per te:</strong> mai più block creativo. Apri la dashboard, scegli un format vincente, lo adatti.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">ROADMAP AGENCY — 8 MESI</div>
+        <h2>Dove arriveremo, <span class="grad">mese per mese</span>.</h2>
+        <p class="section-lead">Il percorso Agency. Per Avatar Chiavi in Mano (3 mesi) lavoriamo sui primi 3 step, accelerati e con focus 100% sul tuo brand.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-month reveal"><div class="tl-month-num">1</div><div class="tl-month-lbl">Setup Avatar</div><div class="tl-month-desc">Volto, voce, identità, knowledge, brand</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">2</div><div class="tl-month-lbl">Produzione</div><div class="tl-month-desc">Prima libreria contenuti, AI stack live</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">3</div><div class="tl-month-lbl">Lancio Social</div><div class="tl-month-desc">IG/FB live, prime ads, primi follower</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">4</div><div class="tl-month-lbl">Funnel & Vendita</div><div class="tl-month-desc">DM automation, sales script, prime call</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">5</div><div class="tl-month-lbl">Posizionamento Agency</div><div class="tl-month-desc">Brand agency, pricing, offerta</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">6</div><div class="tl-month-lbl">Acquisizione Clienti</div><div class="tl-month-desc">Sales funnel agency, primi prospect</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">7</div><div class="tl-month-lbl">Operations</div><div class="tl-month-desc">Team setup, workflow, prima consegna</div></div>
+        <div class="tl-month reveal"><div class="tl-month-num">8</div><div class="tl-month-lbl">Scaling</div><div class="tl-month-desc">Sistema autonomo, prossimi 12 mesi</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISULTATI -->
+  <section id="risultati">
+    <div class="container">
+      <div class="outcomes reveal">
+        <h3>Cosa porti a casa</h3>
+        <p>Non vendiamo follower. Vendiamo un'infrastruttura di business pronta a girare da sola — o un'agency pronta a fatturare.</p>
+
+        <div class="outcome-grid">
+          <div class="out-item">
+            <div class="out-num">01 · ASSET</div>
+            <h4>Avatar AI proprietario</h4>
+            <p>Brand digitale completo, fotorealistico, voce naturale, compliant EU AI Act. Tuo, per sempre.</p>
+          </div>
+          <div class="out-item">
+            <div class="out-num">02 · CONTENUTI</div>
+            <h4>Libreria 90+ contenuti</h4>
+            <p>Video lunghi, brevi, infografiche, stories. Pronti a pubblicare. Replicabili a vita.</p>
+          </div>
+          <div class="out-item">
+            <div class="out-num">03 · STACK</div>
+            <h4>4 AI tool proprietari</h4>
+            <p>AvatarForge, FunnelBot, SalesCoach, AlgoSense — calibrati sul tuo brand, operativi.</p>
+          </div>
+          <div class="out-item">
+            <div class="out-num">04 · FUNNEL</div>
+            <h4>Sistema acquisizione</h4>
+            <p>Dal contenuto al lead alla call al cliente. Ogni step misurato e ottimizzato.</p>
+          </div>
+          <div class="out-item">
+            <div class="out-num">05 · TEMPO</div>
+            <h4>15-20h/settimana liberate</h4>
+            <p>Workflow di automation che fanno il lavoro ripetitivo al posto tuo. Misurabili.</p>
+          </div>
+          <div class="out-item">
+            <div class="out-num">06 · METODO</div>
+            <h4>Processo replicabile</h4>
+            <p>Tutto documentato. Se vuoi creare il prossimo avatar (tuo o cliente), sai come farlo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">PERCHÉ NOI</div>
+        <h2>Non siamo <span class="grad">la solita agenzia AI</span>.</h2>
+        <p class="section-lead">Lo dimostrano il metodo e i risultati. Costruiamo avatar AI e workflow di automation perché è quello che facciamo ogni giorno, da anni — non perché abbiamo letto un articolo.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-val">4</div>
+          <div class="why-lbl">Tool AI proprietari</div>
+          <div class="why-note">Sviluppati internamente, non integrazioni di tool terzi. In comodato d'uso per i clienti.</div>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-val">5gg<span class="small">/sett</span></div>
+          <div class="why-lbl">Presenza diretta</div>
+          <div class="why-note">Affiancamento lun-ven + call settimanale fissa. Niente "settiamo e ci vediamo tra un mese".</div>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-val">24<span class="small">/7</span></div>
+          <div class="why-lbl">Asset che lavorano</div>
+          <div class="why-note">Avatar e workflow attivi giorno e notte. Niente ferie, niente malattia, niente turnover.</div>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-val">100<span class="small">%</span></div>
+          <div class="why-lbl">Confidenzialità</div>
+          <div class="why-note">I nostri clienti sono tutelati. Nessun nome pubblicato. Il valore che diamo resta tra noi e te.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- I NUMERI -->
+  <section id="casi">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">I NUMERI</div>
+        <h2>Quello che <span class="grad">abbiamo costruito finora</span>.</h2>
+        <p class="section-lead">I nomi dei nostri clienti restano riservati — fa parte del valore che diamo. Ma i numeri li condividiamo volentieri. Sono il motivo per cui non vendiamo "AI generica", vendiamo un metodo testato.</p>
+      </div>
+
+      <div class="cases-grid">
+        <div class="case reveal">
+          <div class="case-niche">Avatar attivi</div>
+          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">300+</h4>
+          <div class="case-handle">Brand digitali in produzione</div>
+          <div class="case-desc">Avatar AI fotorealistici lanciati e mantenuti per clienti italiani e internazionali. Generano contenuti, lead e conversioni 24/7.</div>
+        </div>
+        <div class="case reveal">
+          <div class="case-niche">Verticali coperti</div>
+          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">12+</h4>
+          <div class="case-handle">Settori diversi serviti</div>
+          <div class="case-desc">Salute, finanza, wellness, fitness, formazione, immobiliare, beauty, food, tech, legal, fashion, sport. Lo stesso sistema si adatta a ogni nicchia.</div>
+        </div>
+        <div class="case reveal">
+          <div class="case-niche">Ore liberate</div>
+          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">15-20h</h4>
+          <div class="case-handle">A settimana per ogni cliente</div>
+          <div class="case-desc">Tempo restituito grazie a workflow di automation e AI agent calibrati sul business. Misurato sui processi reali del team, non stimato.</div>
+        </div>
+        <div class="case reveal">
+          <div class="case-niche">Credibilità tecnica</div>
+          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">0</h4>
+          <div class="case-handle">Avatar mai smascherati come AI</div>
+          <div class="case-desc">Il nostro principio LOCKED: l'avatar deve passare il test umanità. Skin, micro-movimenti, voce, postura. Niente compromessi.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">DOMANDE FREQUENTI</div>
+        <h2>Quello che <span class="grad">probabilmente ti chiedi</span>.</h2>
+      </div>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Quanto tempo devo dedicarci io?</summary>
+          <p>Avatar Chiavi in Mano (3 mesi): 5-8h/settimana, perché ci pensiamo noi a tutto. Tu fornisci brief, validi e fai poche call. Percorso Agency (8 mesi): 12-15h/settimana, perché stiamo costruendo la TUA agency, e devi imparare facendolo. In entrambi i casi il carico diminuisce man mano che i tool AI prendono in mano i task ripetitivi.</p>
+        </details>
+        <details class="reveal">
+          <summary>L'avatar AI è davvero credibile? Non si vede che è fake?</summary>
+          <p>I 4 avatar che gestiamo sono ancora attivi e generano lead. Il segreto è la qualità tecnica (modelli HeyGen Avatar IV 1080p, ElevenLabs Voice Changer, Higgsfield Nano Banana Pro 2k) + la disciplina del prompt + il principio LOCKED: "tutto deve sembrare umano". Se vedi un AI tell evidente, scartiamo e rigeneriamo. Niente compromessi.</p>
+        </details>
+        <details class="reveal">
+          <summary>I tool AI sono inclusi nel prezzo?</summary>
+          <p>Sì. Tutti e 4 i nostri tool proprietari (AvatarForge, FunnelBot, SalesCoach, AlgoSense) sono inclusi senza costi aggiuntivi per la durata del percorso, calibrati sul tuo brand. A fine percorso puoi riscattarli (valore calcolato a fine percorso) o continuare con noi in formula mantenimento. Costi terzi (API ElevenLabs, HeyGen, Higgsfield) ~€200-400/mese da aggiungere.</p>
+        </details>
+        <details class="reveal">
+          <summary>Il budget Meta Ads è incluso?</summary>
+          <p>No. Indicativamente €500-1.500/mese da aggiungere, spesi direttamente su Meta. Noi gestiamo creatività, audience, ottimizzazione e report. Il budget speso resta del cliente. Le ads sono attivate dal mese 3-4 (Avatar) o 4-5 (Agency).</p>
+        </details>
+        <details class="reveal">
+          <summary>Cosa succede dopo i 3 o 8 mesi?</summary>
+          <p>Al termine hai una macchina che gira. Puoi: 1) gestirla internamente con quello che ti abbiamo trasferito, 2) proseguire con noi in formula mantenimento più leggera (€500-2.000/mese), 3) scalare con un nuovo percorso evolutivo (es. da Avatar a Agency). Decidi tu, valutando i risultati.</p>
+        </details>
+        <details class="reveal">
+          <summary>Lavorate con concorrenti nella stessa nicchia?</summary>
+          <p>No. In ogni verticale lavoriamo con un numero limitato di brand per evitare conflitti di posizionamento. Prima di partire verifichiamo che non ci sia sovrapposizione con clienti attivi nel tuo settore e nella tua area.</p>
+        </details>
+        <details class="reveal">
+          <summary>Posso pagare a rate?</summary>
+          <p>Sì. Piano standard: 50% all'avvio, 25% dopo 30 giorni, 25% dopo 60 giorni. Per il percorso Agency 8 mesi disponibili anche piani più dilazionati su richiesta. Discutiamo in call quale formula è più sostenibile per te.</p>
+        </details>
+        <details class="reveal">
+          <summary>Cosa succede in call?</summary>
+          <p>30 minuti, zero pressione. Ti facciamo 3-4 domande per capire dove sei (business attuale, obiettivi, vincoli), ti spieghiamo quale dei 2 percorsi ha più senso per te (o se nessuno dei 2 fa al caso tuo, lo diciamo onestamente). Se c'è match, ti mandiamo una proposta personalizzata entro 48h. Se non c'è match, ti consigliamo dove andare.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section id="cta">
+    <div class="container">
+      <div class="cta reveal">
+        <div class="cta-inner">
+          <h2>Vediamoci 30 minuti, <span class="grad">capiamo se ha senso</span>.</h2>
+          <p>Niente pitch commerciale aggressivo. Una call vera per capire dove sei, dove vuoi arrivare, e se uno dei 2 percorsi può accompagnarti. Se non è il caso, te lo dico.</p>
+          <div class="cta-btns">
+            <a href="https://calendly.com/mataiautomation/discovery-call" target="_blank" rel="noopener" class="btn-primary">Prenota call di 30 min →</a>
+            <a href="https://www.instagram.com/mataiautomation/" target="_blank" rel="noopener" class="btn-secondary">Scrivimi su Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    Documento riservato · <span>Matt | AI Automation Consultant</span> · Avatar AI · Automation · AI Agent
+    <div style="margin-top: 12px; font-size: 10px; opacity: 0.5;">🤖 Contenuti generati con AI · Compliance EU AI Act Art. 50</div>
+  </div>
+</footer>
+
+<button class="fab-top" id="fabTop" aria-label="Torna su">↑</button>
+
+<script>
+  const progress = document.getElementById('progress');
+  const fab = document.getElementById('fabTop');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = scrolled + '%';
+    if (h.scrollTop > 600) fab.classList.add('visible');
+    else fab.classList.remove('visible');
+  });
+  fab.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
