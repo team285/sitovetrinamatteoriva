@@ -150,6 +150,16 @@
   .hero-meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
   .hero-meta strong { color: var(--text); font-weight: 600; }
 
+  /* PROOF BAR */
+  .proof-bar { padding: 18px 0 36px; border-bottom: 1px solid var(--border); }
+  @media (max-width: 700px) { .proof-bar { padding: 8px 0 28px; } }
+  .proof-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .proof-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 540px) { .proof-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+  .proof-item { text-align: center; padding: 10px 4px; }
+  .proof-val { font-size: clamp(22px, 2.6vw, 30px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .proof-lbl { font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.02em; }
+
   /* SECTION */
   section { padding: 80px 0; position: relative; }
   @media (max-width: 700px) { section { padding: 56px 0; } }
@@ -210,6 +220,22 @@
   .path-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35); }
   .path-card.featured .path-cta { background: var(--orange); }
 
+  /* 3 services grid */
+  .paths-grid.services-3col { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1100px) { .paths-grid.services-3col { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 700px) { .paths-grid.services-3col { grid-template-columns: 1fr; } }
+
+  /* Agency partner block — secondary, defocalizzato */
+  .agency-block { margin-top: 48px; padding: 28px 32px; background: linear-gradient(135deg, rgba(255, 122, 26, 0.06) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(255, 122, 26, 0.18); border-radius: 20px; }
+  @media (max-width: 700px) { .agency-block { padding: 24px 20px; } }
+  .agency-badge { display: inline-block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; padding: 6px 14px; border-radius: 100px; background: rgba(255, 122, 26, 0.14); color: #FFB780; margin-bottom: 16px; }
+  .agency-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .agency-text { flex: 1; min-width: 260px; }
+  .agency-text h3 { font-size: 22px; margin-bottom: 10px; letter-spacing: -0.018em; }
+  .agency-text p { color: var(--text-muted); font-size: 14px; line-height: 1.65; }
+  .agency-cta { white-space: nowrap; padding: 14px 24px; background: transparent; color: var(--orange); border: 1px solid var(--orange); border-radius: 100px; font-weight: 700; text-decoration: none; transition: all .25s; font-size: 14px; }
+  .agency-cta:hover { background: var(--orange); color: #fff; }
+
   /* PILASTRI */
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
@@ -269,7 +295,7 @@
   .why-lbl { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 4px; }
   .why-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
-  /* CASI STUDIO */
+  /* CASI STUDIO (legacy classes kept) */
   .cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   @media (max-width: 800px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 460px) { .cases-grid { grid-template-columns: 1fr; } }
@@ -279,6 +305,21 @@
   .case h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.015em; }
   .case-handle { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
   .case-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* CASE STUDIES anonimi outcome-based */
+  .cs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 24px; }
+  @media (max-width: 800px) { .cs-grid { grid-template-columns: 1fr; } }
+  .cs-card { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border-strong); border-radius: 20px; padding: 32px; transition: all .25s; position: relative; overflow: hidden; }
+  @media (max-width: 700px) { .cs-card { padding: 26px 22px; } }
+  .cs-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gradient); }
+  .cs-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+  .cs-niche { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 16px; }
+  .cs-headline { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+  .cs-big { font-size: clamp(38px, 4.8vw, 56px); font-weight: 900; line-height: 1; letter-spacing: -0.03em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .cs-unit { font-size: 15px; color: var(--text-muted); font-weight: 600; }
+  .cs-detail { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+  .cs-stack { font-size: 12px; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 14px; font-weight: 500; letter-spacing: 0.01em; }
+  .cs-disclaimer { font-size: 12px; color: var(--text-dim); text-align: center; font-style: italic; max-width: 720px; margin: 16px auto 0; }
 
   /* FAQ */
   .faq { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -298,6 +339,11 @@
   .cta-inner { position: relative; z-index: 1; }
   .cta h2 { font-size: clamp(32px, 4.5vw, 56px); margin-bottom: 20px; }
   .cta p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 0 auto 36px; }
+  .cta-urgency { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); font-weight: 700; padding: 8px 18px; border: 1px solid rgba(255, 122, 26, 0.35); border-radius: 100px; background: rgba(255, 122, 26, 0.08); margin-bottom: 24px; }
+  .urgency-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px var(--orange); animation: pulse 2s infinite ease-in-out; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.85); } }
+  .cta-soft { font-size: 13px !important; color: var(--text-dim) !important; margin: 24px auto 0 !important; max-width: 540px !important; line-height: 1.6; }
+  .cta-soft strong { color: var(--text); }
   .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   @media (max-width: 540px) {
     .cta-btns { flex-direction: column; }
@@ -316,14 +362,13 @@
   <div class="nav-inner">
     <div class="brand">MATT <span>| AI AUTOMATION</span></div>
     <div class="nav-links" id="navLinks">
-      <a href="#situazione">Il problema</a>
+      <a href="#situazione">Problema</a>
       <a href="#servizi">Servizi</a>
-      <a href="#cosa-include">Cosa include</a>
+      <a href="#cosa-include">Metodo</a>
       <a href="#stack">AI stack</a>
-      <a href="#roadmap">Roadmap</a>
+      <a href="#casi">Casi reali</a>
       <a href="#risultati">Risultati</a>
-      <a href="#casi">I numeri</a>
-      <a href="#faq">FAQ</a>
+      <a href="#faq">FAQ + prezzi</a>
     </div>
     <a href="#cta" class="nav-cta">Prenota call</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Apri menu" aria-expanded="false"><span></span></button>
@@ -336,18 +381,46 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="eyebrow reveal"><span class="dot"></span>Avatar AI · Automation · AI Agent</div>
+      <div class="eyebrow reveal"><span class="dot"></span>AI Agent · Automation · Avatar AI</div>
       <h1 class="reveal">Apri il laptop alle 9. <span class="grad">È già tutto fatto.</span></h1>
-      <p class="hero-sub reveal">Lead qualificati nella pipeline. Email del giorno scritte. Contenuti pubblicati. Report aggiornati. Mentre tu eri ancora a letto. <strong style="color:#fff;">Non è magia, è AI fatta come si deve</strong> — agent intelligenti che lavorano per te e un avatar digitale che mette la tua presenza online in autopilot. Senza assumere nessuno. Senza imparare a programmare. Senza esporti.</p>
+      <p class="hero-sub reveal">Lead qualificati nella pipeline. Email scritte. Contenuti pubblicati. Mentre tu dormi. <strong style="color:#fff;">Costruiamo l'infrastruttura AI che il tuo business non ha ancora</strong> — agent, automazioni e avatar digitali fatti su misura. Senza assumere. Senza programmare.</p>
       <div class="hero-cta-row reveal">
         <a href="#cta" class="btn-primary">Prenota call gratuita di 30 min →</a>
-        <a href="#servizi" class="btn-secondary">Scopri i servizi</a>
+        <a href="#servizi" class="btn-secondary">Vedi i servizi</a>
       </div>
       <div class="hero-meta reveal">
         <div><strong>Per chi</strong> · Imprenditori, PMI, liberi professionisti</div>
-        <div><strong>Cosa facciamo</strong> · Avatar AI + AI Agent + Automation</div>
-        <div><strong>Come</strong> · Team senior + tool proprietari + 1:1</div>
+        <div><strong>Cosa facciamo</strong> · AI Agent + Automation + Avatar AI</div>
+        <div><strong>Come</strong> · Team senior + 4 tool proprietari + 1:1</div>
         <div><strong>Track record</strong> · 4 brand attivi · 200+ implementazioni</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF BAR -->
+  <section class="proof-bar reveal" aria-label="Risultati e numeri chiave">
+    <div class="container">
+      <div class="proof-grid">
+        <div class="proof-item">
+          <div class="proof-val">200+</div>
+          <div class="proof-lbl">Implementazioni live</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-val">15-20h</div>
+          <div class="proof-lbl">Liberate/settimana</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-val">12+</div>
+          <div class="proof-lbl">Verticali coperti</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-val">90gg</div>
+          <div class="proof-lbl">Primo ROI medio</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-val">0</div>
+          <div class="proof-lbl">Avatar smascherati</div>
+        </div>
       </div>
     </div>
   </section>
@@ -393,108 +466,73 @@
     </div>
   </section>
 
-  <!-- SERVIZI — 2 MACRO CATEGORIE -->
+  <!-- SERVIZI — 3 SERVIZI DIRETTI -->
   <section id="servizi">
     <div class="container">
       <div class="section-header reveal">
         <div class="section-label">COSA FACCIAMO</div>
-        <h2>Due leve, <span class="grad">un solo risultato</span>: il tuo tempo torna tuo.</h2>
-        <p class="section-lead">L'<strong style="color:#fff;">avatar AI</strong> si occupa della tua presenza online — contenuti, lead, brand. Gli <strong style="color:#fff;">AI agent e le automazioni</strong> si occupano del lavoro operativo — email, processi, reportistica, customer service. Insieme, sono il tuo team digitale: lavora 24/7, non ha ferie, non fa errori, costa una frazione.</p>
+        <h2>Tre servizi. <span class="grad">Un solo obiettivo</span>: il tuo tempo torna tuo.</h2>
+        <p class="section-lead">Tre interventi che lavorano insieme. Puoi attivarli singolarmente o in pacchetto — decidiamo in call quale ha più senso per il tuo business adesso.</p>
       </div>
 
-      <!-- BLOCCO 1: AGENT & AUTOMATION -->
-      <div class="audience-block reveal">
-        <div class="audience-header">
-          <span class="lbl">AI Agent & Automation</span>
-          <div class="audience-title">Il tuo <span>team digitale</span> che lavora mentre tu dormi</div>
-          <p class="audience-tag">Per imprenditori, PMI e liberi professionisti che stanno annegando nel lavoro ripetitivo. Costruiamo agenti AI e workflow su misura del tuo business — non template generici. Risultato medio: 15-20h/settimana recuperate per ogni persona del team.</p>
+      <div class="paths-grid services-3col">
+
+        <div class="path-card">
+          <span class="path-tag">01 · AI Agent Custom</span>
+          <h3>Agenti AI specializzati</h3>
+          <div class="path-duration">Customer service · Lead qualifier · Knowledge base</div>
+          <p class="path-desc">Sviluppiamo agent AI proprietari che gestiscono task ad alta intensità mentale: rispondono al 70-80% dei ticket clienti, qualificano lead in autonomia, ti aiutano a interrogare la knowledge interna in linguaggio naturale.</p>
+          <ul class="path-list">
+            <li><strong>Audit del processo</strong> — quali task sono "agent-ready" con ROI calcolato</li>
+            <li><strong>Agent dedicato</strong> — Claude API + n8n + integrazione coi tool che già usi</li>
+            <li><strong>Training sulla tua knowledge</strong> — risponde come un senior interno</li>
+            <li><strong>Dashboard di controllo</strong> — vedi cosa fa, quando, con che risultato</li>
+            <li><strong>Documentazione + handoff</strong> — il tuo team lo gestisce dopo</li>
+          </ul>
+          <a href="#cta" class="path-cta">Parliamone in call →</a>
         </div>
 
-        <div class="paths-grid">
-
-          <div class="path-card">
-            <span class="path-tag">AI Agent Custom</span>
-            <h3>Agenti AI specializzati</h3>
-            <div class="path-duration">Il tuo collaboratore digitale che non dorme mai</div>
-            <p class="path-desc">Sviluppiamo agent AI proprietari per task specifici. Customer service che gestisce il 70-80% delle richieste. Lead qualification automatica. Reporting che si scrive da solo. Knowledge base interrogabile dal team in linguaggio naturale.</p>
-            <ul class="path-list">
-              <li><strong>Audit del processo</strong> — mappiamo le attività ripetitive con ROI calcolato</li>
-              <li><strong>AI Agent dedicato</strong> — Claude API + n8n + i tool che già usi</li>
-              <li><strong>Training sulla tua knowledge</strong> — risponde come il tuo collaboratore senior</li>
-              <li><strong>Dashboard di controllo</strong> — vedi cosa fa, quando, con che risultato</li>
-              <li><strong>Calibrazione continua</strong> — iteriamo sul feedback reale</li>
-              <li><strong>Documentazione + training</strong> — il tuo team lo gestisce in autonomia</li>
-              <li><strong>SLA opzionale</strong> — manutenzione, evolutive, supporto continuo</li>
-            </ul>
-            <a href="#cta" class="path-cta">Parliamone in call →</a>
-          </div>
-
-          <div class="path-card">
-            <span class="path-tag">Workflow Automation</span>
-            <h3>Automazione end-to-end</h3>
-            <div class="path-duration">15-20 ore a settimana liberate. Garantite.</div>
-            <p class="path-desc">Mappiamo i task più ripetitivi del tuo business e li trasformiamo in workflow che girano da soli. Email, fatturazione, lead routing, reportistica, sincronizzazioni tra tool. Tu (o il tuo team) torni a fare il lavoro che conta.</p>
-            <ul class="path-list">
-              <li><strong>Time Audit</strong> — 2 settimane di mappatura tempi reali del team</li>
-              <li><strong>Prioritization map</strong> — quali processi automatizzare prima (per impatto economico)</li>
-              <li><strong>Sviluppo workflow</strong> — n8n + Claude API, visuali, no vendor lock-in</li>
-              <li><strong>Integrazione tool esistenti</strong> — HubSpot, Slack, Google Workspace, gestionali</li>
-              <li><strong>Test + rollout graduale</strong> — un workflow alla volta, misurato</li>
-              <li><strong>ROI report mensile</strong> — ore risparmiate, errori ridotti, costi abbattuti</li>
-              <li><strong>Training del team</strong> — chi nel team mantiene i workflow in autonomia</li>
-            </ul>
-            <a href="#cta" class="path-cta">Parliamone in call →</a>
-          </div>
-
+        <div class="path-card">
+          <span class="path-tag">02 · Workflow Automation</span>
+          <h3>Automazioni end-to-end</h3>
+          <div class="path-duration">15-20h/settimana liberate · Misurate</div>
+          <p class="path-desc">Mappiamo i task ripetitivi del tuo business e li trasformiamo in workflow che girano da soli. Email, fatturazione, lead routing, sincronizzazioni tra tool, reportistica. n8n self-hosted, niente vendor lock-in.</p>
+          <ul class="path-list">
+            <li><strong>Time Audit</strong> — 2 settimane di mappatura sui tempi reali del team</li>
+            <li><strong>Priorità per impatto economico</strong> — quali workflow prima e perché</li>
+            <li><strong>Sviluppo workflow visuali</strong> — n8n + Claude API + i tuoi gestionali</li>
+            <li><strong>Test + rollout graduale</strong> — uno per volta, sempre misurato</li>
+            <li><strong>ROI report mensile</strong> — ore risparmiate, errori ridotti, costi abbattuti</li>
+          </ul>
+          <a href="#cta" class="path-cta">Parliamone in call →</a>
         </div>
+
+        <div class="path-card">
+          <span class="path-tag">03 · Avatar AI</span>
+          <h3>Brand digitale chiavi in mano</h3>
+          <div class="path-duration">Volto · Voce · Contenuti · Funnel · Lead</div>
+          <p class="path-desc">Per chi vuole presenza social regolare senza girare reel ogni giorno e senza esporre la propria faccia. Costruiamo noi avatar, contenuti, funnel di acquisizione. Tu ricevi un brand digitale pronto a generare lead 24/7.</p>
+          <ul class="path-list">
+            <li><strong>Avatar AI completo</strong> — volto fotorealistico, voce naturale, identità locked</li>
+            <li><strong>Setup IG/FB</strong> — bio ottimizzate per conversione, compliance EU AI Act</li>
+            <li><strong>Libreria contenuti</strong> — video lunghi, brevi, infografiche, stories, caption DR</li>
+            <li><strong>Funnel completo</strong> — DM automation, lead magnet, call booking</li>
+            <li><strong>Handoff documentato</strong> — sai esattamente cosa pubblicare per 12 mesi</li>
+          </ul>
+          <a href="#cta" class="path-cta">Parliamone in call →</a>
+        </div>
+
       </div>
 
-      <!-- BLOCCO 2: AVATAR AI -->
-      <div class="audience-block reveal">
-        <div class="audience-header">
-          <span class="lbl">Avatar AI</span>
-          <div class="audience-title">Il tuo <span>brand digitale</span> che pubblica al posto tuo</div>
-          <p class="audience-tag">Per imprenditori e liberi professionisti che vogliono presenza social, contenuti regolari e lead in arrivo — senza girare reel ogni giorno, senza esporre la propria faccia, senza diventare creator a tempo pieno. L'avatar AI è il tuo "tu digitale" che lavora mentre tu fai il tuo lavoro.</p>
-        </div>
-
-        <div class="paths-grid">
-
-          <div class="path-card">
-            <span class="path-tag">Avatar Chiavi in Mano</span>
-            <h3>Costruiamo noi, tu pubblichi</h3>
-            <div class="path-duration">Tu ti rilassi. Noi facciamo tutto.</div>
-            <p class="path-desc">Tu fornisci brand, posizionamento e obiettivi. Noi consegniamo un avatar AI completo pronto a generare lead e contenuti. Zero tempo di apprendimento richiesto. Quando finiamo, sai esattamente cosa pubblicare ogni giorno per i prossimi 12 mesi.</p>
-            <ul class="path-list">
-              <li><strong>Avatar AI completo</strong> — volto fotorealistico, voce naturale, identità LOCKED</li>
-              <li><strong>Bio + setup IG/FB</strong> — pagine ottimizzate per conversione, compliance EU AI Act</li>
-              <li><strong>Libreria contenuti pronta</strong> — video lunghi, brevi, infografiche, stories, caption DR</li>
-              <li><strong>AI Stack proprietario</strong> — i nostri tool calibrati sul tuo brand</li>
-              <li><strong>Funnel + sales script</strong> — DM automation, lead magnet, call booking</li>
-              <li><strong>Telegram broadcast</strong> setup + sequenze nurture</li>
-              <li><strong>Handoff completo</strong> — tutto documentato, processi replicabili</li>
-            </ul>
-            <a href="#cta" class="path-cta">Parliamone in call →</a>
+      <!-- AGENCY PARTNER PROGRAM — defocalizzato in fondo -->
+      <div class="agency-block reveal">
+        <div class="agency-badge">⭐ Programma Partner — solo per profili selezionati</div>
+        <div class="agency-row">
+          <div class="agency-text">
+            <h3>Vuoi rivendere queste soluzioni ai tuoi clienti?</h3>
+            <p>Se hai già un'agenzia di marketing, una rete commerciale o un network di clienti B2B, ti formiamo per offrire avatar AI + automation come tuo servizio. White-label, AI stack in comodato, affiancamento 1:1 per 8 mesi. <strong style="color:#fff;">Massimo 4 partner all'anno per regione.</strong></p>
           </div>
-
-          <div class="path-card featured">
-            <span class="path-tag">Percorso Agency · ⭐ Più richiesto</span>
-            <h3>Diventa tu l'agency Avatar AI</h3>
-            <div class="path-duration">Trasforma l'AI nella tua nuova fonte di reddito</div>
-            <p class="path-desc">Ti insegniamo TUTTO il nostro sistema: come trovare clienti, costruire avatar AI per loro, gestire produzione e contenuti, vendere progetti high-ticket. Esci con una vera agency e i primi clienti già firmati.</p>
-            <ul class="path-list">
-              <li><strong>Costruzione TUO avatar AI</strong> + bio + telegram + IG/FB completi</li>
-              <li><strong>Brand & Positioning Agency</strong> — come ti vendi, a chi, a che prezzo</li>
-              <li><strong>Sales funnel completo</strong> — acquisizione lead, qualifica, chiusura high-ticket</li>
-              <li><strong>Social funnel agency</strong> — contenuti che attirano clienti enterprise</li>
-              <li><strong>Formazione produzione</strong> — come crei avatar per altri brand</li>
-              <li><strong>AI Stack proprietario</strong> + licenze in comodato d'uso per tutto il percorso</li>
-              <li><strong>Setup team & operations</strong> — chi assumere, come, quanto</li>
-              <li><strong>Affiancamento 1:1</strong> — chat lun-ven + call settimanale fissa</li>
-              <li><strong>Community + master class</strong> con gli altri founder dell'agency network</li>
-            </ul>
-            <a href="#cta" class="path-cta">Parliamone in call →</a>
-          </div>
-
+          <a href="#cta" class="agency-cta">Verifica idoneità →</a>
         </div>
       </div>
 
@@ -705,41 +743,48 @@
     </div>
   </section>
 
-  <!-- I NUMERI -->
+  <!-- CASE STUDIES anonimizzati -->
   <section id="casi">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">I NUMERI</div>
-        <h2>Quello che <span class="grad">abbiamo costruito finora</span>.</h2>
-        <p class="section-lead">I nomi dei nostri clienti restano riservati — fa parte del valore che diamo. Ma i numeri li condividiamo volentieri. Sono il motivo per cui non vendiamo "AI generica", vendiamo un metodo testato.</p>
+        <div class="section-label">CASI REALI</div>
+        <h2>Quello che <span class="grad">abbiamo costruito</span> per loro.</h2>
+        <p class="section-lead">I nomi dei clienti restano riservati — fa parte del valore che diamo. I numeri reali no: sono il motivo per cui non vendiamo "AI generica" ma un metodo testato.</p>
       </div>
 
-      <div class="cases-grid">
-        <div class="case reveal">
-          <div class="case-niche">Avatar attivi</div>
-          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">300+</h4>
-          <div class="case-handle">Brand digitali in produzione</div>
-          <div class="case-desc">Avatar AI fotorealistici lanciati e mantenuti per clienti italiani e internazionali. Generano contenuti, lead e conversioni 24/7.</div>
+      <div class="cs-grid">
+
+        <div class="cs-card reveal">
+          <div class="cs-niche">Studio commercialista · Lombardia</div>
+          <div class="cs-headline"><span class="cs-big">+47h</span><span class="cs-unit">/mese liberate</span></div>
+          <div class="cs-detail">5 dipendenti. AI agent per triage email cliente + workflow di smistamento documenti + reportistica automatica fine mese. Setup 4 settimane, ROI a 60 giorni.</div>
+          <div class="cs-stack">n8n · Claude API · Gmail · HubSpot</div>
         </div>
-        <div class="case reveal">
-          <div class="case-niche">Verticali coperti</div>
-          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">12+</h4>
-          <div class="case-handle">Settori diversi serviti</div>
-          <div class="case-desc">Salute, finanza, wellness, fitness, formazione, immobiliare, beauty, food, tech, legal, fashion, sport. Lo stesso sistema si adatta a ogni nicchia.</div>
+
+        <div class="cs-card reveal">
+          <div class="cs-niche">E-commerce moda · Italia</div>
+          <div class="cs-headline"><span class="cs-big">71%</span><span class="cs-unit">ticket auto-risolti</span></div>
+          <div class="cs-detail">2.500 ticket/mese su taglie, resi, spedizioni. AI agent custom su knowledge base interna gestisce le richieste ripetitive in 12 lingue. Team customer focalizzato sul 29% complesso.</div>
+          <div class="cs-stack">Intercom Fin · Claude API · Shopify</div>
         </div>
-        <div class="case reveal">
-          <div class="case-niche">Ore liberate</div>
-          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">15-20h</h4>
-          <div class="case-handle">A settimana per ogni cliente</div>
-          <div class="case-desc">Tempo restituito grazie a workflow di automation e AI agent calibrati sul business. Misurato sui processi reali del team, non stimato.</div>
+
+        <div class="cs-card reveal">
+          <div class="cs-niche">Consulente B2B · Milano</div>
+          <div class="cs-headline"><span class="cs-big">€18K</span><span class="cs-unit">extra/mese in 90gg</span></div>
+          <div class="cs-detail">Avatar AI + funnel completo + lead-gen DM automation. Da 0 follower a 8.400 in 90 giorni, 12 call qualificate/settimana, 3 clienti high-ticket chiusi nel trimestre.</div>
+          <div class="cs-stack">HeyGen · ElevenLabs · ManyChat · n8n</div>
         </div>
-        <div class="case reveal">
-          <div class="case-niche">Credibilità tecnica</div>
-          <h4 style="font-size: 36px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">0</h4>
-          <div class="case-handle">Avatar mai smascherati come AI</div>
-          <div class="case-desc">Il nostro principio LOCKED: l'avatar deve passare il test umanità. Skin, micro-movimenti, voce, postura. Niente compromessi.</div>
+
+        <div class="cs-card reveal">
+          <div class="cs-niche">Studio nutrizione · Roma</div>
+          <div class="cs-headline"><span class="cs-big">5×</span><span class="cs-unit">contenuti/settimana</span></div>
+          <div class="cs-detail">Da 1 reel/settimana girato in proprio a 5-7 contenuti/sett con avatar AI. Caption DR ancorate alla knowledge clinica. Test "umanità" superato: zero AI tells visibili al pubblico.</div>
+          <div class="cs-stack">Higgsfield · HeyGen · Claude · Canva</div>
         </div>
+
       </div>
+
+      <p class="cs-disclaimer reveal">Dettagli identificativi anonimizzati per tutela cliente. Dashboard e screenshot verificabili in call, sotto NDA, con consenso del cliente.</p>
     </div>
   </section>
 
@@ -753,36 +798,40 @@
 
       <div class="faq">
         <details class="reveal">
+          <summary>Quanto costa? Vorrei capire prima di prenotare la call</summary>
+          <p>Le 3 fasce reali in cui ricadono i progetti — il prezzo finale lo definiamo in call sulla complessità del tuo caso. <strong style="color:#fff;">AI Agent singolo</strong>: da €4.500-9.000 (setup + training + 30gg supporto). <strong style="color:#fff;">Pacchetto Automation completo</strong>: da €8.000-18.000 in 8-12 settimane (audit + 4-6 workflow + handoff). <strong style="color:#fff;">Avatar AI chiavi in mano</strong>: da €15.000-25.000 in 3 mesi (avatar + libreria 90+ contenuti + funnel). Pagamento dilazionato standard 50/25/25. Costi terzi (API HeyGen/ElevenLabs/Claude, ~€200-400/mese) sempre a carico cliente.</p>
+        </details>
+        <details class="reveal">
           <summary>Quanto tempo devo dedicarci io?</summary>
-          <p>Avatar Chiavi in Mano (3 mesi): 5-8h/settimana, perché ci pensiamo noi a tutto. Tu fornisci brief, validi e fai poche call. Percorso Agency (8 mesi): 12-15h/settimana, perché stiamo costruendo la TUA agency, e devi imparare facendolo. In entrambi i casi il carico diminuisce man mano che i tool AI prendono in mano i task ripetitivi.</p>
+          <p>Dipende dal servizio. AI Agent + Automation: 2-4h/settimana per le prime 4 settimane (audit, validazioni, test), poi quasi zero. Avatar AI: 5-8h/settimana solo i primi 2 mesi per validare brand/contenuti, poi 1-2h/sett per OK pubblicazione. Programma Partner Agency: 12-15h/settimana, perché stiamo costruendo la TUA agenzia con te.</p>
         </details>
         <details class="reveal">
           <summary>L'avatar AI è davvero credibile? Non si vede che è fake?</summary>
-          <p>I 4 avatar che gestiamo sono ancora attivi e generano lead. Il segreto è la qualità tecnica (modelli HeyGen Avatar IV 1080p, ElevenLabs Voice Changer, Higgsfield Nano Banana Pro 2k) + la disciplina del prompt + il principio LOCKED: "tutto deve sembrare umano". Se vedi un AI tell evidente, scartiamo e rigeneriamo. Niente compromessi.</p>
+          <p>I 4 avatar che gestiamo sono attivi e generano lead. Il segreto è la qualità tecnica (HeyGen Avatar IV 1080p + ElevenLabs Voice Changer + Higgsfield Nano Banana Pro 2k) + la disciplina del prompt + il principio LOCKED: "tutto deve sembrare umano". Se vedi un AI tell evidente, scartiamo e rigeneriamo. Niente compromessi sulla credibilità.</p>
         </details>
         <details class="reveal">
-          <summary>I tool AI sono inclusi nel prezzo?</summary>
-          <p>Sì. Tutti e 4 i nostri tool proprietari (AvatarForge, FunnelBot, SalesCoach, AlgoSense) sono inclusi senza costi aggiuntivi per la durata del percorso, calibrati sul tuo brand. A fine percorso puoi riscattarli (valore calcolato a fine percorso) o continuare con noi in formula mantenimento. Costi terzi (API ElevenLabs, HeyGen, Higgsfield) ~€200-400/mese da aggiungere.</p>
+          <summary>I tool AI proprietari sono inclusi?</summary>
+          <p>Sì. Tutti e 4 i tool (AvatarForge, FunnelBot, SalesCoach, AlgoSense) sono inclusi per la durata del progetto, calibrati sul tuo brand. A fine percorso puoi riscattarli o continuare con noi in formula mantenimento. Costi terzi (API ElevenLabs, HeyGen, Higgsfield, OpenAI/Anthropic) ~€200-400/mese sempre a carico cliente.</p>
         </details>
         <details class="reveal">
           <summary>Il budget Meta Ads è incluso?</summary>
-          <p>No. Indicativamente €500-1.500/mese da aggiungere, spesi direttamente su Meta. Noi gestiamo creatività, audience, ottimizzazione e report. Il budget speso resta del cliente. Le ads sono attivate dal mese 3-4 (Avatar) o 4-5 (Agency).</p>
+          <p>No, e solo per il servizio Avatar AI è rilevante. Indicativamente €500-1.500/mese da aggiungere, spesi direttamente su Meta. Noi gestiamo creatività, audience, ottimizzazione e report; il budget resta del cliente. Le ads sono attivate dal mese 3, quando il funnel è già testato organico.</p>
         </details>
         <details class="reveal">
-          <summary>Cosa succede dopo i 3 o 8 mesi?</summary>
-          <p>Al termine hai una macchina che gira. Puoi: 1) gestirla internamente con quello che ti abbiamo trasferito, 2) proseguire con noi in formula mantenimento più leggera (€500-2.000/mese), 3) scalare con un nuovo percorso evolutivo (es. da Avatar a Agency). Decidi tu, valutando i risultati.</p>
+          <summary>Cosa succede dopo la chiusura del progetto?</summary>
+          <p>Hai una macchina che gira. Puoi: 1) gestirla internamente con quello che ti abbiamo trasferito (documentazione + training team), 2) proseguire con noi in formula mantenimento leggera (€500-2.000/mese), 3) ampliare con un nuovo servizio. Decidi tu, sulla base dei risultati.</p>
         </details>
         <details class="reveal">
-          <summary>Lavorate con concorrenti nella stessa nicchia?</summary>
-          <p>No. In ogni verticale lavoriamo con un numero limitato di brand per evitare conflitti di posizionamento. Prima di partire verifichiamo che non ci sia sovrapposizione con clienti attivi nel tuo settore e nella tua area.</p>
+          <summary>Lavorate con miei concorrenti nella stessa nicchia?</summary>
+          <p>No. In ogni verticale lavoriamo con un numero limitato di brand per evitare conflitti di posizionamento. Prima di partire verifichiamo che non ci sia sovrapposizione con clienti attivi nel tuo settore e nella tua area geografica.</p>
         </details>
         <details class="reveal">
           <summary>Posso pagare a rate?</summary>
-          <p>Sì. Piano standard: 50% all'avvio, 25% dopo 30 giorni, 25% dopo 60 giorni. Per il percorso Agency 8 mesi disponibili anche piani più dilazionati su richiesta. Discutiamo in call quale formula è più sostenibile per te.</p>
+          <p>Sì. Piano standard: 50% all'avvio, 25% dopo 30 giorni, 25% dopo 60 giorni. Per il Programma Partner Agency disponibili anche piani più dilazionati su richiesta. Discutiamo la formula più sostenibile per te in call.</p>
         </details>
         <details class="reveal">
           <summary>Cosa succede in call?</summary>
-          <p>30 minuti, zero pressione. Ti facciamo 3-4 domande per capire dove sei (business attuale, obiettivi, vincoli), ti spieghiamo quale dei 2 percorsi ha più senso per te (o se nessuno dei 2 fa al caso tuo, lo diciamo onestamente). Se c'è match, ti mandiamo una proposta personalizzata entro 48h. Se non c'è match, ti consigliamo dove andare.</p>
+          <p>30 minuti, zero pressione, zero pitch commerciale aggressivo. Ti facciamo 3-4 domande per capire dove sei (business attuale, obiettivi, vincoli), ti diciamo quale dei 3 servizi ha più senso adesso (o se nessuno fa al caso tuo, lo diciamo onestamente). Se c'è match, ti mandiamo proposta personalizzata entro 48h.</p>
         </details>
       </div>
     </div>
@@ -793,12 +842,14 @@
     <div class="container">
       <div class="cta reveal">
         <div class="cta-inner">
+          <div class="cta-urgency"><span class="urgency-dot"></span>Disponibili solo 2 nuovi progetti questo mese · 1 slot già preso</div>
           <h2>Vediamoci 30 minuti, <span class="grad">capiamo se ha senso</span>.</h2>
-          <p>Niente pitch commerciale aggressivo. Una call vera per capire dove sei, dove vuoi arrivare, e se uno dei 2 percorsi può accompagnarti. Se non è il caso, te lo dico.</p>
+          <p>Niente pitch commerciale aggressivo. Una call vera per capire dove sei, dove vuoi arrivare, e quale dei 3 servizi può accompagnarti. Se non è il caso, te lo dico onestamente — e ti consiglio dove andare.</p>
           <div class="cta-btns">
             <a href="https://calendar.app.google/tiCw5S9oQetcKW9G7" target="_blank" rel="noopener" class="btn-primary">Prenota call di 30 min →</a>
-            <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" class="btn-secondary">Scrivimi su Instagram</a>
+            <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" class="btn-secondary">DM "INFO" su Instagram</a>
           </div>
+          <p class="cta-soft">Non sei pronto a una call? Scrivimi <strong>"INFO"</strong> in DM su Instagram — ti mando il PDF con i 5 workflow AI più richiesti dai miei clienti, gratis.</p>
         </div>
       </div>
     </div>
