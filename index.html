@@ -897,6 +897,11 @@
               </label>
             </div>
 
+            <label class="form-field full">
+              <span class="form-label">Numero di telefono <em class="optional">(facoltativo, se vuoi essere richiamato)</em></span>
+              <input type="tel" name="telefono" id="f_telefono" placeholder="+39 ..." autocomplete="tel" inputmode="tel" pattern="[\+\d\s\-\.\(\)]{6,}">
+            </label>
+
             <div class="form-row">
               <label class="form-field">
                 <span class="form-label">Cosa fai? <em>*</em></span>
@@ -1024,6 +1029,7 @@
 
       const nome = document.getElementById('f_nome').value.trim();
       const email = document.getElementById('f_email').value.trim();
+      const telefono = document.getElementById('f_telefono').value.trim();
       const business = document.getElementById('f_business').value;
       const team = document.getElementById('f_team').value;
       const interesse = document.getElementById('f_interesse').value;
@@ -1051,6 +1057,7 @@
         _captcha: 'false',
         Nome: nome,
         Email: email,
+        Telefono: telefono || '(non fornito)',
         Ruolo: business,
         'Dimensione team': team,
         'Servizio di interesse': interesse,
