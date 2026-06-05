@@ -380,10 +380,9 @@
   .form-actions { text-align: center; margin-top: 8px; }
   .form-submit { font-size: 16px !important; padding: 16px 32px !important; cursor: pointer; border: none; font-family: inherit; }
   .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-  .wa-icon { font-size: 18px; }
-  .form-trust { font-size: 12px; color: var(--text-dim); margin-top: 14px; line-height: 1.6; }
-  .form-error { display: none; padding: 10px 14px; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.3); border-radius: 10px; color: #FFA0A0; font-size: 13px; margin-bottom: 14px; }
-  .form-error.show { display: block; }
+  .form-success, .form-error { margin-top: 16px; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+  .form-success { background: rgba(60, 200, 120, 0.10); border: 1px solid rgba(60, 200, 120, 0.30); color: #9FE5B8; }
+  .form-error { background: rgba(255, 80, 80, 0.10); border: 1px solid rgba(255, 80, 80, 0.30); color: #FFA0A0; }
   @media (max-width: 540px) {
     .cta-btns { flex-direction: column; }
     .cta-btns a { width: 100%; justify-content: center; }
@@ -424,7 +423,7 @@
       <h1 class="reveal">Apri il laptop alle 9. <span class="grad">È già tutto fatto.</span></h1>
       <p class="hero-sub reveal">Lead qualificati nella pipeline. Email scritte. Contenuti pubblicati. Mentre tu dormi. <strong style="color:#fff;">Costruiamo l'infrastruttura AI che il tuo business non ha ancora</strong> — agent, automazioni e avatar digitali fatti su misura. Senza assumere. Senza programmare.</p>
       <div class="hero-cta-row reveal">
-        <a href="#cta" class="btn-primary">Capiamo se ha senso lavorare insieme →</a>
+        <a href="#cta" class="btn-primary">Chiedi info su costi e servizi →</a>
         <a href="#servizi" class="btn-secondary">Vedi i servizi</a>
       </div>
       <div class="hero-meta reveal">
@@ -883,7 +882,7 @@
         <div class="cta-inner">
           <div class="cta-urgency"><span class="urgency-dot"></span>Disponibili solo 2 nuovi progetti questo mese · 1 slot già preso</div>
           <h2>Raccontaci dove sei. <span class="grad">Ti rispondiamo entro 24h</span>.</h2>
-          <p>5 domande, 60 secondi. Niente call al buio. Leggiamo quello che scrivi, ti rispondiamo <strong style="color:#fff;">personalmente su WhatsApp</strong> con un primo orientamento concreto. Se c'è match, proponiamo la call. Se no, ti diciamo onestamente dove andare.</p>
+          <p>5 domande, 60 secondi. Niente call al buio. Leggiamo quello che scrivi, ti rispondiamo <strong style="color:#fff;">personalmente via email</strong> con un primo orientamento concreto su costi e servizi. Se c'è match, proponiamo la call. Se no, ti diciamo onestamente dove andare.</p>
 
           <form class="lead-form" id="leadForm" novalidate>
 
@@ -950,10 +949,9 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn-primary form-submit">
-                <span class="wa-icon" aria-hidden="true">💬</span> Continua su WhatsApp →
-              </button>
-              <p class="form-trust">⚡ Risposta media in 4-8h lavorative · 📞 No pitch aggressivo · 🔒 Dati riservati</p>
+              <button type="submit" class="btn-primary form-submit">Richiedi informazioni →</button>
+              <p class="form-success" id="formSuccess" hidden>✅ Richiesta inviata. Ti rispondiamo via email entro 24h lavorative.</p>
+              <p class="form-error" id="formError" hidden>⚠️ Qualcosa è andato storto. Riprova tra qualche minuto o scrivici in DM su Instagram.</p>
             </div>
 
           </form>
@@ -1009,16 +1007,19 @@
     });
   });
 
-  /* LEAD FORM → WHATSAPP REDIRECT
-     Numero WhatsApp Business: SOSTITUIRE prima del deploy reale.
-     Formato: codice paese SENZA "+" o "00", poi numero, tutto attaccato.
-     Esempio Italia: 393331234567 (per +39 333 123 4567)
+  /* LEAD FORM → EMAIL via FormSubmit.co (AJAX)
+     Endpoint: https://formsubmit.co/ajax/EMAIL_DESTINAZIONE
+     Free, no signup. Primo invio richiede conferma email destinatario (one-shot).
   */
-  const WHATSAPP_NUMBER = '393331234567';  // ⚠️ TODO: sostituire col numero WhatsApp Business reale
+  const FORM_EMAIL = 'lucagiampaoletti3@gmail.com';
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
 
   const leadForm = document.getElementById('leadForm');
+  const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+
   if (leadForm) {
-    leadForm.addEventListener('submit', (e) => {
+    leadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const nome = document.getElementById('f_nome').value.trim();
@@ -1038,37 +1039,47 @@
         return;
       }
 
-      const lines = [
-        '👋 Ciao Matt! Arrivo dalla landing.',
-        '',
-        '👤 *Chi sono:* ' + nome,
-        '📧 *Email:* ' + email,
-        '💼 *Ruolo:* ' + business,
-        '👥 *Team:* ' + team,
-        '🎯 *Servizio di interesse:* ' + interesse
-      ];
-      if (problema) {
-        lines.push('');
-        lines.push('💬 *Problema da risolvere:*');
-        lines.push(problema);
-      }
-      lines.push('');
-      lines.push('Posso avere un primo orientamento? Grazie.');
-
-      const message = encodeURIComponent(lines.join('\n'));
-      const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
-
       const submitBtn = leadForm.querySelector('.form-submit');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="wa-icon">⏳</span> Apertura WhatsApp...';
+      submitBtn.textContent = 'Invio in corso...';
+      formSuccess.hidden = true;
+      formError.hidden = true;
 
-      setTimeout(() => {
-        window.open(url, '_blank', 'noopener');
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<span class="wa-icon" aria-hidden="true">💬</span> Continua su WhatsApp →';
-        }, 1500);
-      }, 200);
+      const payload = {
+        _subject: 'Nuovo lead landing Matt | ' + business + ' (' + team + ')',
+        _template: 'table',
+        _captcha: 'false',
+        Nome: nome,
+        Email: email,
+        Ruolo: business,
+        'Dimensione team': team,
+        'Servizio di interesse': interesse,
+        'Problema da risolvere': problema || '(non specificato)'
+      };
+
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success === 'true' || data.success === true) {
+          leadForm.reset();
+          formSuccess.hidden = false;
+          submitBtn.textContent = 'Richiesta inviata ✓';
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Richiedi informazioni →';
+          }, 4000);
+        } else {
+          throw new Error('Server response not successful');
+        }
+      } catch (err) {
+        formError.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Richiedi informazioni →';
+      }
     });
   }
 </script>
