@@ -345,6 +345,45 @@
   .cta-soft { font-size: 13px !important; color: var(--text-dim) !important; margin: 24px auto 0 !important; max-width: 540px !important; line-height: 1.6; }
   .cta-soft strong { color: var(--text); }
   .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* LEAD FORM */
+  .lead-form { max-width: 720px; margin: 12px auto 0; text-align: left; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 700px) { .form-row { grid-template-columns: 1fr; } }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field.full { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
+  .form-label em { color: var(--orange); font-style: normal; font-weight: 700; }
+  .form-label em.optional { color: var(--text-dim); font-weight: 500; font-size: 11px; }
+  .lead-form input[type="text"],
+  .lead-form input[type="email"],
+  .lead-form select,
+  .lead-form textarea {
+    width: 100%; padding: 13px 16px; background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-strong); border-radius: 12px; color: var(--text);
+    font-family: inherit; font-size: 14px; transition: all .2s; outline: none;
+  }
+  .lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus {
+    border-color: var(--orange); background: rgba(255, 122, 26, 0.05); box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.12);
+  }
+  .lead-form input::placeholder, .lead-form textarea::placeholder { color: var(--text-dim); }
+  .lead-form select { cursor: pointer; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%23FF7A1A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+  }
+  .lead-form select option { background: var(--bg-1); color: var(--text); }
+  .lead-form textarea { resize: vertical; min-height: 80px; font-family: inherit; line-height: 1.55; }
+  .form-consent { margin: 18px 0 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .form-check { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
+  .form-check input[type="checkbox"] { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--orange); cursor: pointer; flex-shrink: 0; }
+  .form-check a { color: var(--blue); text-decoration: underline; }
+  .form-actions { text-align: center; margin-top: 8px; }
+  .form-submit { font-size: 16px !important; padding: 16px 32px !important; cursor: pointer; border: none; font-family: inherit; }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .wa-icon { font-size: 18px; }
+  .form-trust { font-size: 12px; color: var(--text-dim); margin-top: 14px; line-height: 1.6; }
+  .form-error { display: none; padding: 10px 14px; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.3); border-radius: 10px; color: #FFA0A0; font-size: 13px; margin-bottom: 14px; }
+  .form-error.show { display: block; }
   @media (max-width: 540px) {
     .cta-btns { flex-direction: column; }
     .cta-btns a { width: 100%; justify-content: center; }
@@ -370,7 +409,7 @@
       <a href="#risultati">Risultati</a>
       <a href="#faq">FAQ + prezzi</a>
     </div>
-    <a href="#cta" class="nav-cta">Prenota call</a>
+    <a href="#cta" class="nav-cta">Contattaci</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Apri menu" aria-expanded="false"><span></span></button>
   </div>
   <div class="scroll-progress" id="progress"></div>
@@ -385,7 +424,7 @@
       <h1 class="reveal">Apri il laptop alle 9. <span class="grad">È già tutto fatto.</span></h1>
       <p class="hero-sub reveal">Lead qualificati nella pipeline. Email scritte. Contenuti pubblicati. Mentre tu dormi. <strong style="color:#fff;">Costruiamo l'infrastruttura AI che il tuo business non ha ancora</strong> — agent, automazioni e avatar digitali fatti su misura. Senza assumere. Senza programmare.</p>
       <div class="hero-cta-row reveal">
-        <a href="#cta" class="btn-primary">Prenota call gratuita di 30 min →</a>
+        <a href="#cta" class="btn-primary">Capiamo se ha senso lavorare insieme →</a>
         <a href="#servizi" class="btn-secondary">Vedi i servizi</a>
       </div>
       <div class="hero-meta reveal">
@@ -489,7 +528,7 @@
             <li><strong>Dashboard di controllo</strong> — vedi cosa fa, quando, con che risultato</li>
             <li><strong>Documentazione + handoff</strong> — il tuo team lo gestisce dopo</li>
           </ul>
-          <a href="#cta" class="path-cta">Parliamone in call →</a>
+          <a href="#cta" class="path-cta">Contattaci →</a>
         </div>
 
         <div class="path-card">
@@ -504,7 +543,7 @@
             <li><strong>Test + rollout graduale</strong> — uno per volta, sempre misurato</li>
             <li><strong>ROI report mensile</strong> — ore risparmiate, errori ridotti, costi abbattuti</li>
           </ul>
-          <a href="#cta" class="path-cta">Parliamone in call →</a>
+          <a href="#cta" class="path-cta">Contattaci →</a>
         </div>
 
         <div class="path-card">
@@ -519,7 +558,7 @@
             <li><strong>Funnel completo</strong> — DM automation, lead magnet, call booking</li>
             <li><strong>Handoff documentato</strong> — sai esattamente cosa pubblicare per 12 mesi</li>
           </ul>
-          <a href="#cta" class="path-cta">Parliamone in call →</a>
+          <a href="#cta" class="path-cta">Contattaci →</a>
         </div>
 
       </div>
@@ -837,19 +876,89 @@
     </div>
   </section>
 
-  <!-- CTA FINALE -->
+  <!-- CTA FINALE — FORM CONTATTI QUALIFIER -->
   <section id="cta">
     <div class="container">
       <div class="cta reveal">
         <div class="cta-inner">
           <div class="cta-urgency"><span class="urgency-dot"></span>Disponibili solo 2 nuovi progetti questo mese · 1 slot già preso</div>
-          <h2>Vediamoci 30 minuti, <span class="grad">capiamo se ha senso</span>.</h2>
-          <p>Niente pitch commerciale aggressivo. Una call vera per capire dove sei, dove vuoi arrivare, e quale dei 3 servizi può accompagnarti. Se non è il caso, te lo dico onestamente — e ti consiglio dove andare.</p>
-          <div class="cta-btns">
-            <a href="https://calendar.app.google/tiCw5S9oQetcKW9G7" target="_blank" rel="noopener" class="btn-primary">Prenota call di 30 min →</a>
-            <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" class="btn-secondary">DM "INFO" su Instagram</a>
-          </div>
-          <p class="cta-soft">Non sei pronto a una call? Scrivimi <strong>"INFO"</strong> in DM su Instagram — ti mando il PDF con i 5 workflow AI più richiesti dai miei clienti, gratis.</p>
+          <h2>Raccontaci dove sei. <span class="grad">Ti rispondiamo entro 24h</span>.</h2>
+          <p>5 domande, 60 secondi. Niente call al buio. Leggiamo quello che scrivi, ti rispondiamo <strong style="color:#fff;">personalmente su WhatsApp</strong> con un primo orientamento concreto. Se c'è match, proponiamo la call. Se no, ti diciamo onestamente dove andare.</p>
+
+          <form class="lead-form" id="leadForm" novalidate>
+
+            <div class="form-row">
+              <label class="form-field">
+                <span class="form-label">Come ti chiami? <em>*</em></span>
+                <input type="text" name="nome" id="f_nome" required placeholder="Nome e cognome" autocomplete="name">
+              </label>
+              <label class="form-field">
+                <span class="form-label">La tua email <em>*</em></span>
+                <input type="email" name="email" id="f_email" required placeholder="tu@azienda.it" autocomplete="email">
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label class="form-field">
+                <span class="form-label">Cosa fai? <em>*</em></span>
+                <select name="business" id="f_business" required>
+                  <option value="">Seleziona...</option>
+                  <option>Imprenditore / Founder PMI</option>
+                  <option>Libero professionista / consulente</option>
+                  <option>Manager / responsabile in azienda</option>
+                  <option>Agenzia / studio creativo</option>
+                  <option>E-commerce / retail</option>
+                  <option>Altro (specifica nel messaggio)</option>
+                </select>
+              </label>
+              <label class="form-field">
+                <span class="form-label">Quante persone in azienda? <em>*</em></span>
+                <select name="team" id="f_team" required>
+                  <option value="">Seleziona...</option>
+                  <option>Solo io</option>
+                  <option>2-5 persone</option>
+                  <option>6-20 persone</option>
+                  <option>21-50 persone</option>
+                  <option>50+ persone</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="form-field full">
+              <span class="form-label">Cosa ti porta qui? <em>*</em></span>
+              <select name="interesse" id="f_interesse" required>
+                <option value="">Seleziona il servizio principale...</option>
+                <option>AI Agent custom (customer service, lead qualifier, knowledge)</option>
+                <option>Workflow Automation (liberare ore al team)</option>
+                <option>Avatar AI + Contenuti (presenza social automatica)</option>
+                <option>Pacchetto completo (più di un servizio)</option>
+                <option>Programma Partner Agency</option>
+                <option>Non lo so ancora, voglio capire cosa fa per me</option>
+              </select>
+            </label>
+
+            <label class="form-field full">
+              <span class="form-label">Qual è il problema principale che vuoi risolvere? <em class="optional">(facoltativo)</em></span>
+              <textarea name="problema" id="f_problema" rows="3" placeholder="Es. 'Il team passa 15h/settimana su email ripetitive', 'Voglio aprire un brand AI ma non so da dove', 'Ho bisogno di un agente che gestisca prenotazioni in 4 lingue'..."></textarea>
+            </label>
+
+            <div class="form-consent">
+              <label class="form-check">
+                <input type="checkbox" id="f_privacy" required>
+                <span>Ho letto e accetto la <a href="#privacy" onclick="event.preventDefault(); alert('Privacy policy: i dati inseriti sono usati solo per ricontattarti via WhatsApp/email. Mai condivisi con terzi. Cancellazione su richiesta a qualsiasi momento.');">privacy policy</a>. I dati restano riservati e non condivisi con terzi.</span>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary form-submit">
+                <span class="wa-icon" aria-hidden="true">💬</span> Continua su WhatsApp →
+              </button>
+              <p class="form-trust">⚡ Risposta media in 4-8h lavorative · 📞 No pitch aggressivo · 🔒 Dati riservati</p>
+            </div>
+
+          </form>
+
+          <p class="cta-soft">Preferisci un primo contatto soft? Scrivimi <strong>"INFO"</strong> in DM su <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">Instagram</a> — ti mando il PDF "5 workflow AI più richiesti dai miei clienti", gratis.</p>
         </div>
       </div>
     </div>
@@ -899,6 +1008,69 @@
       menuToggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  /* LEAD FORM → WHATSAPP REDIRECT
+     Numero WhatsApp Business: SOSTITUIRE prima del deploy reale.
+     Formato: codice paese SENZA "+" o "00", poi numero, tutto attaccato.
+     Esempio Italia: 393331234567 (per +39 333 123 4567)
+  */
+  const WHATSAPP_NUMBER = '393331234567';  // ⚠️ TODO: sostituire col numero WhatsApp Business reale
+
+  const leadForm = document.getElementById('leadForm');
+  if (leadForm) {
+    leadForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('f_nome').value.trim();
+      const email = document.getElementById('f_email').value.trim();
+      const business = document.getElementById('f_business').value;
+      const team = document.getElementById('f_team').value;
+      const interesse = document.getElementById('f_interesse').value;
+      const problema = document.getElementById('f_problema').value.trim();
+      const privacy = document.getElementById('f_privacy').checked;
+
+      if (!nome || !email || !business || !team || !interesse || !privacy) {
+        alert('Per favore compila tutti i campi obbligatori (segnati con *) e accetta la privacy.');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Inserisci un indirizzo email valido.');
+        return;
+      }
+
+      const lines = [
+        '👋 Ciao Matt! Arrivo dalla landing.',
+        '',
+        '👤 *Chi sono:* ' + nome,
+        '📧 *Email:* ' + email,
+        '💼 *Ruolo:* ' + business,
+        '👥 *Team:* ' + team,
+        '🎯 *Servizio di interesse:* ' + interesse
+      ];
+      if (problema) {
+        lines.push('');
+        lines.push('💬 *Problema da risolvere:*');
+        lines.push(problema);
+      }
+      lines.push('');
+      lines.push('Posso avere un primo orientamento? Grazie.');
+
+      const message = encodeURIComponent(lines.join('\n'));
+      const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+
+      const submitBtn = leadForm.querySelector('.form-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="wa-icon">⏳</span> Apertura WhatsApp...';
+
+      setTimeout(() => {
+        window.open(url, '_blank', 'noopener');
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span class="wa-icon" aria-hidden="true">💬</span> Continua su WhatsApp →';
+        }, 1500);
+      }, 200);
+    });
+  }
 </script>
 
 </body>
