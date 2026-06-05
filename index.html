@@ -885,7 +885,12 @@
           <h2>Raccontaci dove sei. <span class="grad">Ti rispondiamo entro 24h</span>.</h2>
           <p>5 domande, 60 secondi. Niente call al buio. Leggiamo quello che scrivi, ti rispondiamo <strong style="color:#fff;">personalmente via email</strong> con un primo orientamento concreto su costi e servizi. Se c'è match, proponiamo la call. Se no, ti diciamo onestamente dove andare.</p>
 
-          <form class="lead-form" id="leadForm" novalidate>
+          <form class="lead-form" id="leadForm" action="https://formsubmit.co/lucagiampaoletti3@gmail.com" method="POST" novalidate>
+            <input type="hidden" name="_subject" id="f_subject" value="Nuovo lead landing Matt | AI Automation">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://matt-automation-ai.up.railway.app/?sent=1#cta">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
             <div class="form-row">
               <label class="form-field">
@@ -1013,82 +1018,57 @@
     });
   });
 
-  /* LEAD FORM → EMAIL via FormSubmit.co (AJAX)
-     Endpoint: https://formsubmit.co/ajax/EMAIL_DESTINAZIONE
-     Free, no signup. Primo invio richiede conferma email destinatario (one-shot).
+  /* LEAD FORM → EMAIL via FormSubmit.co (POST classico con redirect)
+     Form action: formsubmit.co/EMAIL → mail al destinatario → redirect a ?sent=1
+     Funziona anche al primo invio (no AJAX precondition).
   */
-  const FORM_EMAIL = 'lucagiampaoletti3@gmail.com';
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
-
   const leadForm = document.getElementById('leadForm');
   const formSuccess = document.getElementById('formSuccess');
   const formError = document.getElementById('formError');
 
   if (leadForm) {
-    leadForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
+    leadForm.addEventListener('submit', (e) => {
       const nome = document.getElementById('f_nome').value.trim();
       const email = document.getElementById('f_email').value.trim();
-      const telefono = document.getElementById('f_telefono').value.trim();
       const business = document.getElementById('f_business').value;
       const team = document.getElementById('f_team').value;
       const interesse = document.getElementById('f_interesse').value;
-      const problema = document.getElementById('f_problema').value.trim();
       const privacy = document.getElementById('f_privacy').checked;
 
       if (!nome || !email || !business || !team || !interesse || !privacy) {
+        e.preventDefault();
         alert('Per favore compila tutti i campi obbligatori (segnati con *) e accetta la privacy.');
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        e.preventDefault();
         alert('Inserisci un indirizzo email valido.');
         return;
       }
 
+      // populate dynamic subject
+      const subjectField = document.getElementById('f_subject');
+      if (subjectField) {
+        subjectField.value = 'Nuovo lead landing Matt | ' + business + ' (' + team + ')';
+      }
+
+      // disable button + give visual feedback (POST classico farà submit normale)
       const submitBtn = leadForm.querySelector('.form-submit');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Invio in corso...';
-      formSuccess.hidden = true;
-      formError.hidden = true;
-
-      const payload = {
-        _subject: 'Nuovo lead landing Matt | ' + business + ' (' + team + ')',
-        _template: 'table',
-        _captcha: 'false',
-        Nome: nome,
-        Email: email,
-        Telefono: telefono || '(non fornito)',
-        Ruolo: business,
-        'Dimensione team': team,
-        'Servizio di interesse': interesse,
-        'Problema da risolvere': problema || '(non specificato)'
-      };
-
-      try {
-        const res = await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (data.success === 'true' || data.success === true) {
-          leadForm.reset();
-          formSuccess.hidden = false;
-          submitBtn.textContent = 'Richiesta inviata ✓';
-          setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Richiedi informazioni →';
-          }, 4000);
-        } else {
-          throw new Error('Server response not successful');
-        }
-      } catch (err) {
-        formError.hidden = false;
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Richiedi informazioni →';
-      }
     });
+  }
+
+  // se URL contiene ?sent=1 → mostra success al posto del form
+  if (window.location.search.indexOf('sent=1') !== -1 && leadForm) {
+    const cards = leadForm.parentElement;
+    leadForm.style.display = 'none';
+    if (formSuccess) {
+      formSuccess.hidden = false;
+      formSuccess.style.fontSize = '15px';
+      formSuccess.style.padding = '24px';
+      formSuccess.style.textAlign = 'center';
+    }
   }
 </script>
 
