@@ -169,6 +169,22 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
   .hero-meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
   .hero-meta strong { color: var(--text); font-weight: 600; }
 
+  /* AUDIT TEASER BAND */
+  .audit-teaser { padding: 56px 0 40px; }
+  @media (max-width: 700px) { .audit-teaser { padding: 40px 0 28px; } }
+  .audit-row { max-width: 920px; margin: 0 auto; padding: 44px 40px; text-align: center;
+    background: linear-gradient(135deg, rgba(255, 122, 26, 0.10) 0%, rgba(59, 130, 246, 0.08) 100%);
+    border: 1px solid rgba(255, 122, 26, 0.28); border-radius: 24px; position: relative; overflow: hidden;
+  }
+  @media (max-width: 700px) { .audit-row { padding: 32px 22px; border-radius: 18px; } }
+  .audit-row::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); }
+  .audit-badge { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); font-weight: 800; padding: 8px 18px; border: 1px solid rgba(255, 122, 26, 0.42); border-radius: 100px; background: rgba(255, 122, 26, 0.10); margin-bottom: 22px; }
+  .audit-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px var(--orange); animation: pulse 2s infinite ease-in-out; }
+  .audit-title { font-size: clamp(24px, 3.4vw, 38px); font-weight: 900; line-height: 1.16; letter-spacing: -0.025em; margin-bottom: 18px; }
+  .audit-desc { color: var(--text-muted); font-size: 16px; line-height: 1.7; max-width: 720px; margin: 0 auto 26px; }
+  .audit-cta { font-size: 16px !important; padding: 16px 30px !important; }
+  .audit-finep { margin-top: 18px; font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
   /* PROOF BAR */
   .proof-bar { padding: 18px 0 36px; border-bottom: 1px solid var(--border); }
   @media (max-width: 700px) { .proof-bar { padding: 8px 0 28px; } }
@@ -340,6 +356,20 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
   .cs-stack { font-size: 12px; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 14px; font-weight: 500; letter-spacing: 0.01em; }
   .cs-disclaimer { font-size: 12px; color: var(--text-dim); text-align: center; font-style: italic; max-width: 720px; margin: 16px auto 0; }
 
+  /* AUDIT SECTION (Kennedy DR lead magnet) */
+  .audit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 32px; }
+  @media (max-width: 800px) { .audit-grid { grid-template-columns: 1fr; } }
+  .audit-item { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%); border: 1px solid var(--border-strong); border-radius: 18px; padding: 30px 28px; position: relative; transition: all .25s; }
+  @media (max-width: 700px) { .audit-item { padding: 24px 20px; } }
+  .audit-item:hover { border-color: var(--orange); transform: translateY(-3px); }
+  .audit-num { position: absolute; top: 18px; right: 22px; font-size: 32px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; opacity: 0.18; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .audit-item h3 { font-size: 19px; margin-bottom: 12px; letter-spacing: -0.015em; max-width: 80%; }
+  .audit-item p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  .audit-guarantee { display: flex; gap: 18px; align-items: flex-start; max-width: 720px; margin: 0 auto 36px; padding: 22px 26px; background: rgba(59, 130, 246, 0.07); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; }
+  @media (max-width: 540px) { .audit-guarantee { flex-direction: column; gap: 10px; padding: 20px; } }
+  .audit-guarantee-icon { font-size: 36px; line-height: 1; flex-shrink: 0; }
+  .audit-final-cta { text-align: center; }
+
   /* FAQ */
   .faq { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .faq details { background: var(--bg-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; transition: all .2s; }
@@ -420,12 +450,11 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
   <div class="nav-inner">
     <div class="brand">MATT <span>| AI AUTOMATION</span></div>
     <div class="nav-links" id="navLinks">
-      <a href="#situazione">Problema</a>
       <a href="#servizi">Servizi</a>
       <a href="#cosa-include">Metodo</a>
       <a href="#stack">AI stack</a>
       <a href="#casi">Casi reali</a>
-      <a href="#risultati">Risultati</a>
+      <a href="#audit" style="color: var(--orange); font-weight: 600;">🎯 Audit gratuito</a>
       <a href="#faq">FAQ + prezzi</a>
     </div>
     <a href="#cta" class="nav-cta">Contattaci</a>
@@ -443,7 +472,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
       <h1 class="reveal">Risparmia oltre <span class="grad">40 ore a settimana</span> con le automazioni AI.</h1>
       <p class="hero-sub reveal">Ecco il metodo che ha permesso a centinaia di imprenditori e liberi professionisti di <strong style="color:#fff;">scalare la propria azienda SENZA assumere dipendenti</strong>, risparmiando 40 ore a settimana e oltre <strong style="color:#fff;">30.000 € l'anno in costi di personale</strong>.</p>
       <div class="hero-cta-row reveal">
-        <a href="#cta" class="btn-primary">Sì, voglio capire come funziona →</a>
+        <a href="#cta" class="btn-primary">Sì, voglio l'audit AI gratuito di 24h →</a>
         <a href="#servizi" class="btn-secondary">Mostrami il metodo</a>
       </div>
       <div class="hero-meta reveal">
@@ -451,6 +480,19 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
         <div><strong>Risultato medio</strong> · 40+ ore/sett liberate · €30K/anno risparmiati</div>
         <div><strong>Tempi</strong> · ROI medio in 60-90 giorni</div>
         <div><strong>Garanzia</strong> · Se non si recupera quel monte ore, ce ne andiamo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIT TEASER BAND — Kennedy DR lead magnet promise -->
+  <section class="audit-teaser reveal" aria-label="Audit AI gratuito 24h">
+    <div class="container">
+      <div class="audit-row">
+        <div class="audit-badge"><span class="audit-pulse"></span>OFFERTA GRATUITA · Solo 8 audit al mese disponibili</div>
+        <h3 class="audit-title">Prima ti diciamo <span class="grad">quanto stai sprecando</span>. <br>Poi decidi se vuoi recuperarlo.</h3>
+        <p class="audit-desc">Compila il form qui sotto. Entro 24h ricevi un <strong style="color:#fff;">Audit AI personalizzato</strong> del tuo business: ti facciamo vedere nero su bianco quante ore alla settimana stai perdendo, quanto ti costa in stipendi e dove l'AI può intervenire subito. <strong style="color:#fff;">Lo facciamo gratis</strong>, anche se poi non lavoreremo insieme.</p>
+        <a href="#cta" class="btn-primary audit-cta">Voglio l'audit gratuito ora →</a>
+        <p class="audit-finep">Nessuna carta di credito. Nessun automatismo. Lo prepara una persona reale del nostro team. Lo ricevi via email entro 24h lavorative.</p>
       </div>
     </div>
   </section>
@@ -555,7 +597,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
               <li><strong>Dashboard di controllo</strong> — cosa fa, quando, con che risultato</li>
               <li><strong>Documentazione + handoff</strong> — il tuo team lo gestisce in autonomia</li>
             </ul>
-            <a href="#cta" class="path-cta">Contattaci →</a>
+            <a href="#cta" class="path-cta">Richiedi audit gratuito →</a>
           </div>
 
           <div class="path-card">
@@ -570,7 +612,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
               <li><strong>Integrazione gestionali esistenti</strong> — anche legacy o italiani (Zucchetti, TeamSystem)</li>
               <li><strong>ROI report mensile</strong> — ore risparmiate, errori ridotti, costi abbattuti</li>
             </ul>
-            <a href="#cta" class="path-cta">Contattaci →</a>
+            <a href="#cta" class="path-cta">Richiedi audit gratuito →</a>
           </div>
 
         </div>
@@ -598,7 +640,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
               <li><strong>Bozze proposte commerciali</strong> personalizzate sul prospect</li>
               <li><strong>Follow-up automatici</strong> ai clienti dormienti, in linguaggio umano</li>
             </ul>
-            <a href="#cta" class="path-cta">Contattaci →</a>
+            <a href="#cta" class="path-cta">Richiedi audit gratuito →</a>
           </div>
 
           <div class="path-card">
@@ -613,7 +655,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
               <li><strong>Calendario sincronizzato</strong> Google/Outlook, slot dinamici</li>
               <li><strong>Sequenze nurture</strong> per i lead non ancora pronti</li>
             </ul>
-            <a href="#cta" class="path-cta">Contattaci →</a>
+            <a href="#cta" class="path-cta">Richiedi audit gratuito →</a>
           </div>
 
         </div>
@@ -883,6 +925,59 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <!-- AUDIT GRATUITO — Cosa contiene -->
+  <section id="audit">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label" style="color: var(--orange);">🎯 AUDIT AI GRATUITO · IL TUO PRIMO PASSO</div>
+        <h2>Cosa ricevi <span class="grad">entro 24 ore</span> dalla compilazione del form.</h2>
+        <p class="section-lead">Niente "ti contattiamo per fissare una chiacchierata". Niente brochure generica. Riceverai un documento personalizzato sul TUO business, costruito a mano dal nostro team. Se ti pagassimo questo audit, costerebbe almeno €500. Lo facciamo gratis perché vogliamo che tu veda con i tuoi occhi quanto stai sprecando.</p>
+      </div>
+
+      <div class="audit-grid">
+
+        <div class="audit-item reveal">
+          <div class="audit-num">01</div>
+          <h3>📊 Mappa Costo Nascosto</h3>
+          <p>Calcoliamo, sulla base del settore e della dimensione del team, quante ore alla settimana stai sprecando in lavoro ripetitivo. Tradotte in <strong style="color:#fff;">euro persi al mese</strong>. Sopravviverai ad averlo nero su bianco.</p>
+        </div>
+
+        <div class="audit-item reveal">
+          <div class="audit-num">02</div>
+          <h3>🎯 Top 3 Aree di Recupero</h3>
+          <p>Identifichiamo i tre processi del tuo business dove l'AI può intervenire <strong style="color:#fff;">SUBITO con il ROI più alto</strong>. Ordinati per impatto economico, non per moda tecnologica.</p>
+        </div>
+
+        <div class="audit-item reveal">
+          <div class="audit-num">03</div>
+          <h3>💰 Stima ROI a 90 giorni</h3>
+          <p>Per ciascuna area indichiamo <strong style="color:#fff;">quante ore recuperi, quanti soldi risparmi, in quanti giorni</strong>. Numeri puliti, basati su casi reali del tuo verticale. Niente promesse "fino a 50 volte ROI" da guru.</p>
+        </div>
+
+        <div class="audit-item reveal">
+          <div class="audit-num">04</div>
+          <h3>🛠️ Piano d'Azione Step-by-step</h3>
+          <p>Anche se NON lavorerai con noi, avrai una <strong style="color:#fff;">roadmap operativa</strong> di cosa fare nei prossimi 30 giorni per iniziare. Puoi farla da solo, con un altro fornitore o con noi. Decidi tu.</p>
+        </div>
+
+      </div>
+
+      <div class="audit-guarantee reveal">
+        <div class="audit-guarantee-icon">🛡️</div>
+        <div>
+          <h4 style="font-size: 19px; margin-bottom: 6px; letter-spacing: -0.015em;">GARANZIA DEL VALORE</h4>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">Se dopo aver letto l'audit pensi che non valga il tuo tempo, dimmelo via email — non sentirai più parlare di noi. Niente automatismi, niente "sequenze di follow-up". <strong style="color:#fff;">Promesso.</strong></p>
+        </div>
+      </div>
+
+      <div class="audit-final-cta reveal">
+        <a href="#cta" class="btn-primary" style="font-size: 17px; padding: 18px 36px;">Voglio l'audit gratuito ora →</a>
+        <p style="font-size: 12px; color: var(--text-dim); margin-top: 14px;">⏱️ 60 secondi per compilare · 📧 Audit in inbox entro 24h · 🎯 8 slot ancora disponibili questo mese</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section id="faq">
     <div class="container">
@@ -937,12 +1032,12 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
     <div class="container">
       <div class="cta reveal">
         <div class="cta-inner">
-          <div class="cta-urgency"><span class="urgency-dot"></span>Disponibili solo 2 nuovi progetti questo mese · 1 slot già preso</div>
-          <h2>Raccontaci dove sei. <span class="grad">Ti rispondiamo entro 24h</span>.</h2>
-          <p>5 domande, 60 secondi. Niente call al buio. Leggiamo quello che scrivi, ti rispondiamo <strong style="color:#fff;">personalmente via email</strong> con un primo orientamento concreto su costi, servizi e fattibilità nel tuo caso. Se c'è match, proponiamo la call. Se no, ti diciamo onestamente dove andare.</p>
+          <div class="cta-urgency"><span class="urgency-dot"></span>SOLO 8 AUDIT GRATUITI AL MESE · 3 già richiesti questa settimana</div>
+          <h2>Richiedi ora il tuo <span class="grad">Audit AI Personalizzato</span>. Gratis.</h2>
+          <p>Compila il form in 60 secondi. Entro 24 ore ricevi <strong style="color:#fff;">via email</strong> un documento personalizzato con: mappa del costo nascosto del tuo business, 3 aree di recupero immediato, stima ROI a 90 giorni e roadmap d'azione. <strong style="color:#fff;">Lo prepara una persona reale</strong> del nostro team, non un'AI di risposta automatica. Anche se poi non lavoreremo insieme, è tuo.</p>
 
           <form class="lead-form" id="leadForm" action="https://formsubmit.co/lucagiampaoletti3@gmail.com" method="POST" novalidate>
-            <input type="hidden" name="_subject" id="f_subject" value="Nuovo lead landing Matt | AI Automation">
+            <input type="hidden" name="_subject" id="f_subject" value="🎯 Nuova richiesta AUDIT AI gratuito - Matt landing">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_next" value="https://matt-automation-ai.up.railway.app/?sent=1#cta">
@@ -1018,14 +1113,14 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn-primary form-submit">Richiedi informazioni →</button>
-              <p class="form-success" id="formSuccess" hidden>✅ Richiesta inviata. Ti rispondiamo via email entro 24h lavorative.</p>
+              <button type="submit" class="btn-primary form-submit">Sì, voglio l'Audit AI Gratuito →</button>
+              <p class="form-success" id="formSuccess" hidden>✅ Richiesta ricevuta. L'audit personalizzato arriva in inbox entro 24h lavorative. Controlla anche la cartella promozioni / spam.</p>
               <p class="form-error" id="formError" hidden>⚠️ Qualcosa è andato storto. Riprova tra qualche minuto o scrivici in DM su Instagram.</p>
             </div>
 
           </form>
 
-          <p class="cta-soft">Preferisci un primo contatto soft? Scrivimi <strong>"INFO"</strong> in DM su <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">Instagram</a> — ti mando il PDF "5 workflow AI più richiesti dai miei clienti", gratis.</p>
+          <p class="cta-soft"><strong>PS:</strong> ogni mail di lead in cui un imprenditore non chiede l'audit equivale, in media, a €240 sprecati in ore di team la settimana successiva. Lo abbiamo misurato. Più aspetti, più paghi. <a href="https://www.instagram.com/automationconsultant.ai/" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">Preferisci scriverci prima su Instagram?</a></p>
         </div>
       </div>
     </div>
@@ -1107,7 +1202,7 @@ src="https://www.facebook.com/tr?id=1535672314733488&ev=PageView&noscript=1"
       // populate dynamic subject
       const subjectField = document.getElementById('f_subject');
       if (subjectField) {
-        subjectField.value = 'Nuovo lead landing Matt | ' + business + ' (' + team + ')';
+        subjectField.value = '🎯 AUDIT richiesto | ' + business + ' (' + team + ')';
       }
 
       // disable button + give visual feedback (POST classico farà submit normale)
